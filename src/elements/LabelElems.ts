@@ -134,4 +134,15 @@ export default class LabelElems {
 
         this.map.delete(from)
     }
+
+    public ondrag(x: number, y: number) {
+        for (let [_key, value] of this.map) {
+            if (value.getIsMouseDown()) {
+                value.setIsDrag(true)
+                value.setX(x)
+                value.setY(y)
+                break
+            }
+        }
+    }
 }

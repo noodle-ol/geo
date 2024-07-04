@@ -204,6 +204,8 @@ window.onload = (_e) => {
         if (selectedPointElem != null) {
             selectedPointElem.move(clientX, clientY)
         }
+
+        labelElems.ondrag(clientX, clientY)
     }
 
     const pointMoveMain = (e: MouseEvent) => {
@@ -211,6 +213,8 @@ window.onload = (_e) => {
         if (selectedPointElem != null) {
             selectedPointElem.move(clientX, clientY)
         }
+
+        labelElems.ondrag(clientX, clientY)
     }
 
     let isDrag = false
