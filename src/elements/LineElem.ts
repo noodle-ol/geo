@@ -1,25 +1,25 @@
 import PointElem from "./PointElem"
 import {createSVGTagElem} from "../helper"
-import Elem from "./IElem"
+import LabelElem from "./LabelElem"
 
-export default class LineElem implements Elem {
+export default class LineElem extends LabelElem {
     private d: string
     private startPoint: PointElem
     private endPoint: PointElem
-    private elem: SVGElement
 
-    public constructor(startPoint: PointElem, endPoint: PointElem) {
+    public constructor(startPoint: PointElem, endPoint: PointElem, label: Nullable<string>) {
+        const d = `M ${startPoint.getX()} ${startPoint.getY()} L ${endPoint.getX()} ${endPoint.getY()}`
+
+        const lineElem = createSVGTagElem("path")
+        lineElem.setAttribute("d", d)
+        lineElem.setAttribute("stroke", "red")
+
+        super(lineElem, startPoint.getX(), startPoint.getY(), label, false)
+
+        this.d = d
         this.startPoint = startPoint
         this.endPoint = endPoint
 
-        this.d = this.generateD()
-
-        const lineElem = createSVGTagElem("path")
-        lineElem.setAttribute("d", this.d)
-        lineElem.setAttribute("stroke", "red")
-
-        this.elem = lineElem
-        
         this.startPoint.onMove((_p) => {
             this.d = this.generateD()
             this.elem.setAttribute("d", this.d)
@@ -44,7 +44,29 @@ export default class LineElem implements Elem {
         return this.elem
     }
 
+    public getEndPoint(): PointElem {
+        return this.endPoint
+    }
+
+    public setEndPoint(endPoint: PointElem) {
+        this.endPoint = endPoint
+        this.d = this.generateD()
+        this.elem.setAttribute("d", this.d)
+        this.endPoint.onMove((_p) => {
+            this.d = this.generateD()
+            this.elem.setAttribute("d", this.d)
+        })
+    }
+
     public remove() {
         this.elem.remove()
+    }
+
+    public onmousedown(_e: MouseEvent) {
+
+    }
+
+    public onmousemove(_e: MouseEvent) {
+
     }
 }
