@@ -6,6 +6,7 @@ export default class LineElem extends LabelElem {
     private d: string
     private startPoint: PointElem
     private endPoint: PointElem
+    private isShow: boolean
 
     public constructor(startPoint: PointElem, endPoint: PointElem, label: Nullable<string>) {
         const d = `M ${startPoint.getX()} ${startPoint.getY()} L ${endPoint.getX()} ${endPoint.getY()}`
@@ -19,6 +20,7 @@ export default class LineElem extends LabelElem {
         this.d = d
         this.startPoint = startPoint
         this.endPoint = endPoint
+        this.isShow = true
 
         this.startPoint.onMove((_p) => {
             this.d = this.generateD()
@@ -38,6 +40,23 @@ export default class LineElem extends LabelElem {
         const endPointY = this.endPoint.getY()
 
         return `M ${startPointX} ${startPointY} L ${endPointX} ${endPointY}`
+    }
+
+    public hide() {
+        if (this.isShow) {
+            this.elem.setAttribute("stroke-opacity", "0")
+            this.isShow = false
+            this.hideLabel()
+        }
+    }
+
+    public show() {
+        if (!this.isShow) {
+            this.elem.setAttribute("stroke-opacity", "1")
+            this.isShow = true
+            this.showLabel()
+        }
+
     }
 
     public getElem(): SVGElement {

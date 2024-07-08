@@ -1,8 +1,10 @@
 import CircleCommand from "./commands/CircleCommand"
 import Commands from "./commands/Commands"
+import HideCommand from "./commands/HideCommand"
 import LineCommand from "./commands/LineCommand"
 import MouseCommand from "./commands/MouseCommand"
 import PointCommand from "./commands/PointCommand"
+import ShowCommand from "./commands/ShowCommand"
 import Elems from "./elements/Elems"
 
 export const commandStartup = () => {
@@ -11,6 +13,8 @@ export const commandStartup = () => {
     PointCommand.getInstance()
     LineCommand.getInstance()
     CircleCommand.getInstance()
+    HideCommand.getInstance()
+    ShowCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }

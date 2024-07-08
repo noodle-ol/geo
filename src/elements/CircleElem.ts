@@ -6,6 +6,7 @@ export default class CircleElem extends LabelElem {
     private center: PointElem
     private p: PointElem
     private stroke: string
+    private isShow: boolean
 
     public constructor(center: PointElem, p: PointElem, label: Nullable<string>) {
         const stroke = "red"
@@ -22,6 +23,7 @@ export default class CircleElem extends LabelElem {
         this.center = center
         this.p = p
         this.stroke = stroke
+        this.isShow = true
 
         this.center.onMove((p: PointElem) => {
             elem.setAttribute("cx", p.getX().toString())
@@ -38,6 +40,23 @@ export default class CircleElem extends LabelElem {
 
     public getElem(): SVGElement {
         return this.elem
+    }
+
+    public hide() {
+        if (this.isShow) {
+            this.elem.setAttribute("stroke-opacity", "0")
+            this.isShow = false
+            this.hideLabel()
+        }
+    }
+
+    public show() {
+        if (!this.isShow) {
+            this.elem.setAttribute("stroke-opacity", "1")
+            this.isShow = true
+            this.showLabel()
+        }
+
     }
 
     public getStroke(): string {

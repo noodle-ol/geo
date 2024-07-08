@@ -26,6 +26,10 @@ export default class BaseElem implements ChoosableElem {
 
     public choose() {}
 
+    public hide() {}
+
+    public show() {}
+
     public onmousedown(_e: MouseEvent) {}
 
     public onmousemove(_e: MouseEvent) {}
