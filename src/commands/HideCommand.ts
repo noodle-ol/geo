@@ -1,12 +1,14 @@
 import BaseElem from "../elements/BaseElem"
 import Elem from "../elements/IElem"
+import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
-import Command from "./ICommand"
 
-export default class HideCommand implements Command{
+export default class HideCommand extends BaseCommand {
     static instance: HideCommand
 
-    private constructor() {}
+    private constructor() {
+        super()
+    }
 
     public static getInstance(): HideCommand {
         if (!HideCommand.instance) {
@@ -22,12 +24,4 @@ export default class HideCommand implements Command{
             p[0].hide()
         }
     }
-
-    public onmousedown(_e: MouseEvent) {}
-
-    public onmousemove(_e: MouseEvent) {}
-
-    public onmouseup(_e: MouseEvent) {}
-
-    public onleave() {}
 }

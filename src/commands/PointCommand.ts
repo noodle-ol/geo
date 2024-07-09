@@ -2,14 +2,15 @@ import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElem from "../elements/PointElem";
 import PointElems from "../elements/PointElems";
+import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
-import Command from "./ICommand";
 
-export default class PointCommand implements Command {
+export default class PointCommand extends BaseCommand {
     static instance: PointCommand
     private isMouseDown: boolean
 
     private constructor() {
+        super()
         this.isMouseDown = false
     }
 

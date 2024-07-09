@@ -1,12 +1,14 @@
 import BaseElem from "../elements/BaseElem"
 import Elem from "../elements/IElem"
+import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
-import Command from "./ICommand"
 
-export default class ShowCommand implements Command{
+export default class ShowCommand extends BaseCommand {
     static instance: ShowCommand
 
-    private constructor() {}
+    private constructor() {
+        super()
+    }
 
     public static getInstance(): ShowCommand {
         if (!ShowCommand.instance) {
@@ -22,12 +24,4 @@ export default class ShowCommand implements Command{
             p[0].show()
         }
     }
-
-    public onmousedown(_e: MouseEvent) {}
-
-    public onmousemove(_e: MouseEvent) {}
-
-    public onmouseup(_e: MouseEvent) {}
-
-    public onleave() {}
 }

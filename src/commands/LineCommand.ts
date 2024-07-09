@@ -3,10 +3,10 @@ import Elem from "../elements/IElem"
 import LineElem from "../elements/LineElem"
 import PointElem from "../elements/PointElem"
 import PointElems from "../elements/PointElems"
+import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
-import Command from "./ICommand"
 
-export default class LineCommand implements Command{
+export default class LineCommand extends BaseCommand {
     static instance: LineCommand
     private isMouseDown: boolean
     private isMouseMove: boolean
@@ -15,6 +15,7 @@ export default class LineCommand implements Command{
     private tempEndPointElem: Nullable<PointElem>
 
     private constructor() {
+        super()
         this.isMouseDown = false
         this.isMouseMove = false
         this.tempLineElem = null
@@ -125,7 +126,6 @@ export default class LineCommand implements Command{
 
     public onleave() {
         if (this.tempLineElem != null) {
-            console.log(1)
             this.tempLineElem.remove()
             this.tempStartPointElem?.remove()
             this.tempEndPointElem?.remove()

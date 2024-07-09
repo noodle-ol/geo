@@ -1,14 +1,15 @@
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElems from "../elements/PointElems";
+import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
-import Command from "./ICommand";
 
-export default class MouseCommand implements Command {
+export default class MouseCommand extends BaseCommand {
     static instance: MouseCommand
     private isMouseDown: boolean
 
     private constructor() {
+        super()
         this.isMouseDown = false
     }
 
@@ -47,6 +48,4 @@ export default class MouseCommand implements Command {
     public onmouseup(_e: MouseEvent) {
         this.isMouseDown = false
     }
-
-    public onleave() {}
 }

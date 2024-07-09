@@ -1,11 +1,13 @@
 import Elem from "../elements/IElem"
+import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
-import Command from "./ICommand"
 
-export default class FullscreenCommand implements Command {
+export default class FullscreenCommand extends BaseCommand {
     static instance: FullscreenCommand
 
-    private constructor() {}
+    private constructor() {
+        super()
+    }
 
     public static getInstance(): FullscreenCommand {
         if (!FullscreenCommand.instance) {
@@ -26,12 +28,4 @@ export default class FullscreenCommand implements Command {
             bodyElem.requestFullscreen()
         }
     }
-
-    public onmousedown(_e: MouseEvent) {}
-
-    public onmousemove(_e: MouseEvent) {}
-
-    public onmouseup(_e: MouseEvent) {}
-
-    public onleave() {}
 }

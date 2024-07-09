@@ -3,10 +3,10 @@ import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElem from "../elements/PointElem";
 import PointElems from "../elements/PointElems";
+import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
-import Command from "./ICommand";
 
-export default class CircleCommand implements Command {
+export default class CircleCommand extends BaseCommand {
     static instance: CircleCommand
     private isMouseDown: boolean
     private isMouseMove: boolean
@@ -15,6 +15,7 @@ export default class CircleCommand implements Command {
     private tempPElem: Nullable<PointElem>
 
     private constructor() {
+        super()
         this.isMouseDown = false
         this.isMouseMove = false
         this.tempCircleElem = null
