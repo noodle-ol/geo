@@ -187,7 +187,6 @@ export default class PointElem extends LabelElem {
     }
 
     public setStyle(style: PointStyle) {
-        console.log(style.fill)
         if (style.fill != undefined) {
             this.setFill(style.fill)
         }
