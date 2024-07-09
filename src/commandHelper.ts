@@ -2,11 +2,13 @@ import CircleCommand from "./commands/CircleCommand"
 import Commands from "./commands/Commands"
 import FullscreenCommand from "./commands/FullscreenCommand"
 import HideCommand from "./commands/HideCommand"
+import HideLabelCommand from "./commands/HideLabelCommand"
 import LineCommand from "./commands/LineCommand"
 import MouseCommand from "./commands/MouseCommand"
 import PointCommand from "./commands/PointCommand"
 import RemoveCommand from "./commands/RemoveCommand"
 import ShowCommand from "./commands/ShowCommand"
+import ShowLabelCommand from "./commands/ShowLabelCommand"
 import Elems from "./elements/Elems"
 
 export const commandStartup = () => {
@@ -19,6 +21,8 @@ export const commandStartup = () => {
     ShowCommand.getInstance()
     FullscreenCommand.getInstance()
     RemoveCommand.getInstance()
+    HideLabelCommand.getInstance()
+    ShowLabelCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }
