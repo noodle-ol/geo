@@ -67,4 +67,9 @@ export default class LabelElem extends BaseElem {
     public setLabelParentY(y: number) {
         this.labelElem.setAttribute("y", (y + this.relativeY).toString())
     }
+
+    public setLabel(label: string) {
+        this.label = label
+        this.labelElem.innerHTML = this.label
+    }
 }

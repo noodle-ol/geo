@@ -18,6 +18,10 @@ export default class BaseElem implements ChoosableElem {
         return this.elem
     }
 
+    public getId(): number {
+        return this.id
+    }
+
     public remove() {
         this.elem.remove()
     }

@@ -1,6 +1,8 @@
+import { createLabel } from "../stateHelper"
 import BaseElem from "./BaseElem"
 import ChoosableElem from "./IChoosableElem"
 import Elem from "./IElem"
+import LabelElem from "./LabelElem"
 
 export default class Elems {
     static instance: Elems
@@ -74,5 +76,28 @@ export default class Elems {
 
     public getSelectedElem(): Nullable<Elem> {
         return this.selectedElem
+    }
+
+    public changeLabel(elem: LabelElem, label: string) {
+        const id = this.mapLabel.get(label)
+        if (id != null) {
+            const oldElem = this.mapElem.get(id)
+            if (oldElem != null && oldElem instanceof LabelElem) {
+                const [labelChar, labelNum] = createLabel()
+                let oldElemLabel = ""
+
+                if (labelNum == 0) {
+                    oldElemLabel = labelChar
+                } else {
+                    oldElemLabel = labelChar + labelNum
+                }
+
+                oldElem.setLabel(oldElemLabel)
+                this.mapLabel.set(oldElemLabel, id)
+            }
+        }
+
+        elem.setLabel(label)
+        this.mapLabel.set(label, elem.getId())
     }
 }
