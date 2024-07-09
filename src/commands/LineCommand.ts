@@ -65,7 +65,7 @@ export default class LineCommand extends BaseCommand {
             }
 
             const endPoint = new PointElem(clientX, clientY, null)
-            endPoint.hide()
+            endPoint.setIsGhost(true)
             this.tempEndPointElem = endPoint
 
             Elems.instance.select(pointElem)
@@ -76,7 +76,7 @@ export default class LineCommand extends BaseCommand {
             const endPoint = this.tempLineElem.getEndPoint()
             if (pointElem == null) {
                 endPoint.move(clientX, clientY)
-                endPoint.show()
+                endPoint.setIsGhost(false)
             } else {
                 this.tempLineElem.setEndPoint(pointElem)
                 endPoint.remove()
@@ -110,7 +110,7 @@ export default class LineCommand extends BaseCommand {
                     let pointElem = PointElems.instance.find(clientX, clientY)
                     const endPoint = this.tempLineElem.getEndPoint()
                     if (pointElem == null) {
-                        endPoint.show()
+                        endPoint.setIsGhost(false)
                     } else {
                         this.tempLineElem.setEndPoint(pointElem)
                         endPoint.remove()

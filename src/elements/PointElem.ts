@@ -9,13 +9,16 @@ export default class PointElem extends LabelElem {
     private stroke: string
     private fill: string
     private onMoveCallbacks: ((p: PointElem) => void)[]
+    private onLeaveCallbacks: (() => void)[]
     private isShow: boolean
+    private isGhost: boolean
 
     public constructor(x: number, y: number, label: Nullable<string>, isShowLabel: boolean = true) {
         const stroke = "red"
         const fill = "red"
         const r = 5
         const isShow = true
+        const isGhost = false
 
         const pointElem = createSVGTagElem("circle")
         pointElem.setAttribute("cx", x.toString())
@@ -28,12 +31,14 @@ export default class PointElem extends LabelElem {
         super(pointElem, x, y, label, isShowLabel)
 
         this.isShow = isShow
+        this.isGhost = isGhost
         this.x = x
         this.y = y
         this.r = r
         this.stroke = stroke
         this.fill = fill
         this.onMoveCallbacks = []
+        this.onLeaveCallbacks = []
 
         PointElems.instance.push(this)
     }
@@ -118,9 +123,23 @@ export default class PointElem extends LabelElem {
         return this.isShow
     }
 
+    public setIsGhost(isGhost: boolean) {
+        this.isGhost = isGhost
+        if (this.isGhost) {
+            this.hide()
+        } else {
+            this.show()
+        }
+    }
+
     public remove() {
         this.labelElem.remove()
         this.elem.remove()
+        if (!this.isGhost) {
+            for (const callback of this.onLeaveCallbacks) {
+                callback()
+            }
+        }
     }
 
     public isClick(x: number, y: number): boolean {
@@ -152,5 +171,9 @@ export default class PointElem extends LabelElem {
 
     public onmousemove(_e: MouseEvent) {
         this.move(globalThis.mouseX, globalThis.mouseY)
+    }
+
+    public onLeaveCallback(callback: () => void) {
+        this.onLeaveCallbacks.push(callback)
     }
 }

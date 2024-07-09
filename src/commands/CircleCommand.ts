@@ -65,7 +65,7 @@ export default class CircleCommand extends BaseCommand {
             }
 
             const p = new PointElem(clientX, clientY, null)
-            p.hide()
+            p.setIsGhost(true)
             this.tempPElem = p
 
             Elems.instance.select(pointElem)
@@ -76,7 +76,7 @@ export default class CircleCommand extends BaseCommand {
             const p = this.tempCircleElem.getP()
             if (pointElem == null) {
                 p.move(clientX, clientY)
-                p.show()
+                p.setIsGhost(false)
             } else {
                 this.tempCircleElem.setP(pointElem)
                 p.remove()
@@ -110,7 +110,7 @@ export default class CircleCommand extends BaseCommand {
                     let pointElem = PointElems.instance.find(clientX, clientY)
                     const p = this.tempCircleElem.getP()
                     if (pointElem == null) {
-                        p.show()
+                        p.setIsGhost(false)
                     } else {
                         this.tempCircleElem.setP(pointElem)
                         p.remove()

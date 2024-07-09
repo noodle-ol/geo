@@ -5,6 +5,7 @@ import HideCommand from "./commands/HideCommand"
 import LineCommand from "./commands/LineCommand"
 import MouseCommand from "./commands/MouseCommand"
 import PointCommand from "./commands/PointCommand"
+import RemoveCommand from "./commands/RemoveCommand"
 import ShowCommand from "./commands/ShowCommand"
 import Elems from "./elements/Elems"
 
@@ -17,6 +18,7 @@ export const commandStartup = () => {
     HideCommand.getInstance()
     ShowCommand.getInstance()
     FullscreenCommand.getInstance()
+    RemoveCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }

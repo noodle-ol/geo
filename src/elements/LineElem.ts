@@ -27,9 +27,17 @@ export default class LineElem extends LabelElem {
             this.elem.setAttribute("d", this.d)
         })
 
+        this.startPoint.onLeaveCallback(() => {
+            this.remove()
+        })
+
         this.endPoint.onMove((_p) => {
             this.d = this.generateD()
             this.elem.setAttribute("d", this.d)
+        })
+
+        this.endPoint.onLeaveCallback(() => {
+            this.remove()
         })
     }
 

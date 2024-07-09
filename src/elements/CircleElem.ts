@@ -31,8 +31,16 @@ export default class CircleElem extends LabelElem {
             elem.setAttribute("r", pointDistance(p, this.p).toString())
         })
 
+        this.center.onLeaveCallback(() => {
+            this.remove()
+        })
+
         this.p.onMove((p: PointElem) => {
             this.elem.setAttribute("r", pointDistance(this.center, p).toString())
+        })
+
+        this.p.onLeaveCallback(() => {
+            this.remove()
         })
 
         this.elem = elem
