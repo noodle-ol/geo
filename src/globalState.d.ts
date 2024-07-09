@@ -6,3 +6,5 @@ declare var mainLeftMargin: number
 
 declare var mouseX: number
 declare var mouseY: number
+
+declare var currentShortcut: string

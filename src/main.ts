@@ -4,6 +4,7 @@ import PointElems from './elements/PointElems'
 import { commandStartup, execute } from './commandHelper'
 import Elems from './elements/Elems'
 import Commands from './commands/Commands'
+import { shortcut } from './shortcutHelper'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
@@ -31,6 +32,7 @@ window.onload = (_e) => {
     commandStartup()
 
     mainElem.onmousedown = (e) => {
+        globalThis.currentShortcut = ""
         Commands.instance.getCurrentCommand().onmousedown(e)
     }
 
@@ -60,6 +62,19 @@ window.onload = (_e) => {
             Commands.instance.getCurrentCommand().onleave()
             Elems.instance.unselect()
             Commands.instance.setDefaultCommand()
+        } else if (e.key == "g") {
+            globalThis.currentShortcut = "g"
+        } else {
+            const command = shortcut.get(globalThis.currentShortcut + e.key)
+            if (command != null) {
+                const commandOb = Commands.instance.get(command)
+                if (commandOb != null) {
+                    globalThis.currentShortcut = ""
+                    Commands.instance.getCurrentCommand().onleave()
+                    Elems.instance.unselect()
+                    Commands.instance.setCurrentCommand(commandOb)
+                }
+            }
         }
     }
 
@@ -71,6 +86,7 @@ window.onload = (_e) => {
         }
 
         commandElem.onkeyup = (e) => {
+            e.stopPropagation()
             if (e.key == "Enter") {
                 execute(commandElem.value)
                 commandElem.classList.add("hide")
