@@ -1,9 +1,9 @@
 import PointElem from "./PointElem"
 import {createSVGTagElem} from "../helper"
-import LabelElem from "./LabelElem"
 import { ElemType } from "../enum/ElemType"
+import CurveElem from "./CurveElem"
 
-export default class LineElem extends LabelElem {
+export default class LineElem extends CurveElem {
     private d: string
     private startPoint: PointElem
     private endPoint: PointElem
@@ -14,9 +14,8 @@ export default class LineElem extends LabelElem {
 
         const lineElem = createSVGTagElem("path")
         lineElem.setAttribute("d", d)
-        lineElem.setAttribute("stroke", "red")
 
-        super(lineElem, startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
+        super(lineElem, "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
 
         this.d = d
         this.startPoint = startPoint

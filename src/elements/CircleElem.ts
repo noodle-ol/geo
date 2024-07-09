@@ -1,29 +1,23 @@
 import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem, pointDistance } from "../helper";
-import LabelElem from "./LabelElem";
+import CurveElem from "./CurveElem";
 import PointElem from "./PointElem";
 
-export default class CircleElem extends LabelElem {
+export default class CircleElem extends CurveElem {
     private center: PointElem
     private p: PointElem
-    private stroke: string
     private isShow: boolean
 
     public constructor(center: PointElem, p: PointElem, label: Nullable<string>) {
-        const stroke = "red"
-
         const elem = createSVGTagElem("circle")
         elem.setAttribute("cx", center.getX().toString())
         elem.setAttribute("cy", center.getY().toString())
         elem.setAttribute("r", pointDistance(center, p).toString())
-        elem.setAttribute("stroke", stroke)
-        elem.setAttribute("fill-opacity", "0")
 
-        super(elem, p.getX(), p.getY(), label, false, ElemType.Curve)
+        super(elem, "red", p.getX(), p.getY(), label, false, ElemType.Curve)
 
         this.center = center
         this.p = p
-        this.stroke = stroke
         this.isShow = true
 
         this.center.onMove((p: PointElem) => {
@@ -66,15 +60,6 @@ export default class CircleElem extends LabelElem {
             this.showLabel()
         }
 
-    }
-
-    public getStroke(): string {
-        return this.stroke
-    }
-
-    public setStroke(stroke: string) {
-        this.stroke = stroke
-        this.elem.setAttribute("stroke", this.stroke)
     }
 
     public getP(): PointElem {

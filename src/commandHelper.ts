@@ -1,3 +1,4 @@
+import ChangeCurveStyleCommand from "./commands/ChangeCurveStyleCommand"
 import ChangeLabelCommand from "./commands/ChangeLabelCommand"
 import ChangePointStyleCommand from "./commands/ChangePointStyleCommand"
 import CircleCommand from "./commands/CircleCommand"
@@ -27,6 +28,7 @@ export const commandStartup = () => {
     ShowLabelCommand.getInstance()
     ChangeLabelCommand.getInstance()
     ChangePointStyleCommand.getInstance()
+    ChangeCurveStyleCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }
