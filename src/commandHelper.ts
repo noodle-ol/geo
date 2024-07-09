@@ -1,5 +1,6 @@
 import CircleCommand from "./commands/CircleCommand"
 import Commands from "./commands/Commands"
+import FullscreenCommand from "./commands/FullscreenCommand"
 import HideCommand from "./commands/HideCommand"
 import LineCommand from "./commands/LineCommand"
 import MouseCommand from "./commands/MouseCommand"
@@ -15,6 +16,7 @@ export const commandStartup = () => {
     CircleCommand.getInstance()
     HideCommand.getInstance()
     ShowCommand.getInstance()
+    FullscreenCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }
