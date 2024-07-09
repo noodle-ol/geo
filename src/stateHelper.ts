@@ -1,15 +1,29 @@
-export const createLabel = (): [string, number] => {
-    const labelChar = globalThis.nextLabelChar
-    const labelNum = globalThis.nextLabelNum
+export const createPointLabel = (): [string, number] => {
+    const labelPointChar = globalThis.nextPointLabelChar
+    const labelPointNum = globalThis.nextPointLabelNum
 
-    if (labelChar == "Z") {
-        globalThis.nextLabelChar = "A"
-        globalThis.nextLabelNum++
+    if (labelPointChar == "Z") {
+        globalThis.nextPointLabelChar = "A"
+        globalThis.nextPointLabelNum++
     } else {
-        globalThis.nextLabelChar = String.fromCharCode(labelChar.charCodeAt(0) + 1)
+        globalThis.nextPointLabelChar = String.fromCharCode(labelPointChar.charCodeAt(0) + 1)
     }
 
-    return [labelChar, labelNum]
+    return [labelPointChar, labelPointNum]
+}
+
+export const createCurveLabel = (): [string, number] => {
+    const labelCurveChar = globalThis.nextCurveLabelChar
+    const labelCurveNum = globalThis.nextCurveLabelNum
+
+    if (labelCurveChar == "z") {
+        globalThis.nextCurveLabelChar = "a"
+        globalThis.nextCurveLabelNum++
+    } else {
+        globalThis.nextCurveLabelChar = String.fromCharCode(labelCurveChar.charCodeAt(0) + 1)
+    }
+
+    return [labelCurveChar, labelCurveNum]
 }
 
 export const createId = (): number => {

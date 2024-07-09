@@ -8,8 +8,10 @@ import { shortcut } from './shortcutHelper'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
-    globalThis.nextLabelChar = "A"
-    globalThis.nextLabelNum = 0
+    globalThis.nextPointLabelChar = "A"
+    globalThis.nextPointLabelNum = 0
+    globalThis.nextCurveLabelChar = "a"
+    globalThis.nextCurveLabelNum = 0
 
     const mainElem: Nullable<HTMLElement> = document.getElementById("main")
     if (mainElem == null) {

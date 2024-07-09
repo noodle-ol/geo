@@ -1,4 +1,4 @@
-import { createLabel } from "../stateHelper"
+import { createPointLabel } from "../stateHelper"
 import BaseElem from "./BaseElem"
 import ChoosableElem from "./IChoosableElem"
 import Elem from "./IElem"
@@ -83,7 +83,7 @@ export default class Elems {
         if (id != null) {
             const oldElem = this.mapElem.get(id)
             if (oldElem != null && oldElem instanceof LabelElem) {
-                const [labelChar, labelNum] = createLabel()
+                const [labelChar, labelNum] = createPointLabel()
                 let oldElemLabel = ""
 
                 if (labelNum == 0) {

@@ -28,11 +28,11 @@ export default class PointCommand extends BaseCommand {
     }
 
     private drawPointWithCoor(x: number, y: number) {
-        new PointElem(x, y, null)
+        new PointElem(x, y, null, {})
     }
 
     private drawPointWithCoorAndLabel(x: number, y: number, label: string) {
-        new PointElem(x, y, label)
+        new PointElem(x, y, label, {})
     }
 
     public execute(p: (Elem | string | number)[]) {
@@ -54,7 +54,7 @@ export default class PointCommand extends BaseCommand {
             return
         }
 
-        pointElem = new PointElem(clientX, clientY, null)
+        pointElem = new PointElem(clientX, clientY, null, {})
         Elems.instance.select(pointElem)
     }
 

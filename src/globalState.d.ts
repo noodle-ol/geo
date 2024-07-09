@@ -1,6 +1,8 @@
 declare var nextId: number
-declare var nextLabelChar: string
-declare var nextLabelNum: number
+declare var nextPointLabelChar: string
+declare var nextPointLabelNum: number
+declare var nextCurveLabelChar: string
+declare var nextCurveLabelNum: number
 
 declare var mainLeftMargin: number
 

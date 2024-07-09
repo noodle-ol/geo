@@ -1,6 +1,7 @@
 import PointElem from "./PointElem"
 import {createSVGTagElem} from "../helper"
 import LabelElem from "./LabelElem"
+import { ElemType } from "../enum/ElemType"
 
 export default class LineElem extends LabelElem {
     private d: string
@@ -15,7 +16,7 @@ export default class LineElem extends LabelElem {
         lineElem.setAttribute("d", d)
         lineElem.setAttribute("stroke", "red")
 
-        super(lineElem, startPoint.getX(), startPoint.getY(), label, false)
+        super(lineElem, startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
 
         this.d = d
         this.startPoint = startPoint

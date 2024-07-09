@@ -60,11 +60,11 @@ export default class LineCommand extends BaseCommand {
             this.isMouseDown = true
             let pointElem = PointElems.instance.find(clientX, clientY)
             if (pointElem == null) {
-                pointElem = new PointElem(clientX, clientY, null)
+                pointElem = new PointElem(clientX, clientY, null, {})
                 this.tempStartPointElem = pointElem
             }
 
-            const endPoint = new PointElem(clientX, clientY, null)
+            const endPoint = new PointElem(clientX, clientY, null, {isGhost: true})
             endPoint.setIsGhost(true)
             this.tempEndPointElem = endPoint
 

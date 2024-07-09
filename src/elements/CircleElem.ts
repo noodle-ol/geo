@@ -1,3 +1,4 @@
+import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem, pointDistance } from "../helper";
 import LabelElem from "./LabelElem";
 import PointElem from "./PointElem";
@@ -18,7 +19,7 @@ export default class CircleElem extends LabelElem {
         elem.setAttribute("stroke", stroke)
         elem.setAttribute("fill-opacity", "0")
 
-        super(elem, p.getX(), p.getY(), label, false)
+        super(elem, p.getX(), p.getY(), label, false, ElemType.Curve)
 
         this.center = center
         this.p = p

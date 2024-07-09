@@ -1,5 +1,6 @@
+import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem } from "../helper";
-import { createLabel } from "../stateHelper";
+import { createCurveLabel, createPointLabel } from "../stateHelper";
 import BaseElem from "./BaseElem";
 import Elems from "./Elems";
 
@@ -10,14 +11,19 @@ export default class LabelElem extends BaseElem {
     protected relativeY: number
     protected isLabelShow: boolean
 
-    public constructor(elem: SVGElement, parentX: number, parentY: number, label: Nullable<string>, isLabelShow: boolean) {
+    public constructor(elem: SVGElement, parentX: number, parentY: number, label: Nullable<string>, isLabelShow: boolean, elemType: ElemType) {
         super(elem)
 
         this.relativeX = 5
         this.relativeY = 5
 
         if (label == null) {
-            const [labelChar, labelNum] = createLabel()
+            let [labelChar, labelNum] = ['', 0]
+            if (elemType == ElemType.Point) {
+                [labelChar, labelNum] = createPointLabel()
+            } else if (elemType == ElemType.Curve) {
+                [labelChar, labelNum] = createCurveLabel()
+            }
 
             if (labelNum == 0) {
                 this.label = labelChar

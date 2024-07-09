@@ -1,5 +1,7 @@
+import { ElemType } from "../enum/ElemType"
 import {createSVGTagElem} from "../helper"
 import LabelElem from "./LabelElem"
+import PointElemParam from "./PointElemParam"
 import PointElems from "./PointElems"
 
 export default class PointElem extends LabelElem {
@@ -13,12 +15,18 @@ export default class PointElem extends LabelElem {
     private isShow: boolean
     private isGhost: boolean
 
-    public constructor(x: number, y: number, label: Nullable<string>, isShowLabel: boolean = true) {
+    public constructor(x: number, y: number, label: Nullable<string>, params: PointElemParam) {
         const stroke = "red"
         const fill = "red"
         const r = 5
         const isShow = true
-        const isGhost = false
+        const isGhost = params.isGhost ? params.isGhost : false
+        let isShowLabel = params.isShowLabel || params.isShowLabel == undefined ? true : false
+
+        if (isGhost) {
+            isShowLabel = false
+            label = ''
+        }
 
         const pointElem = createSVGTagElem("circle")
         pointElem.setAttribute("cx", x.toString())
@@ -28,7 +36,7 @@ export default class PointElem extends LabelElem {
         pointElem.setAttribute("fill", fill)
         pointElem.classList.add("cursor-pointer")
 
-        super(pointElem, x, y, label, isShowLabel)
+        super(pointElem, x, y, label, isShowLabel, ElemType.Point)
 
         this.isShow = isShow
         this.isGhost = isGhost

@@ -60,11 +60,11 @@ export default class CircleCommand extends BaseCommand {
             this.isMouseDown = true
             let pointElem = PointElems.instance.find(clientX, clientY)
             if (pointElem == null) {
-                pointElem = new PointElem(clientX, clientY, null)
+                pointElem = new PointElem(clientX, clientY, null, {})
                 this.tempCenterElem = pointElem
             }
 
-            const p = new PointElem(clientX, clientY, null)
+            const p = new PointElem(clientX, clientY, null, {isGhost: true})
             p.setIsGhost(true)
             this.tempPElem = p
 
