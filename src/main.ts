@@ -10,16 +10,12 @@ window.onload = (_e) => {
     globalThis.nextLabelChar = "A"
     globalThis.nextLabelNum = 0
 
-    const commandElem: Nullable<HTMLInputElement> = <Nullable<HTMLInputElement>>document.getElementById("command")
-
     const mainElem: Nullable<HTMLElement> = document.getElementById("main")
     if (mainElem == null) {
         return
     }
 
-    const mainElemLeftMargin = mainElem.getBoundingClientRect()["x"]
-
-    globalThis.mainLeftMargin = mainElemLeftMargin
+    globalThis.mainLeftMargin = mainElem.getBoundingClientRect()["x"]
 
     const svgElem = new SVGElem(mainElem.offsetWidth, mainElem.offsetHeight)
     mainElem.appendChild(svgElem.getElem())
@@ -36,7 +32,6 @@ window.onload = (_e) => {
 
     mainElem.onmousedown = (e) => {
         Commands.instance.getCurrentCommand().onmousedown(e)
-
     }
 
     mainElem.onmousemove = (e) => {
@@ -68,6 +63,7 @@ window.onload = (_e) => {
         }
     }
 
+    const commandElem: Nullable<HTMLInputElement> = <Nullable<HTMLInputElement>>document.getElementById("command")
     if (commandElem != null) {
         commandElem.onblur = (_e) => {
             commandElem.classList.add("hide")
