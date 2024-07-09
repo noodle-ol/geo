@@ -91,6 +91,9 @@ window.onload = (_e) => {
                 execute(commandElem.value)
                 commandElem.classList.add("hide")
                 commandElem.value = ""
+            } else if (e.key == "Escape") {
+                commandElem.classList.add("hide")
+                commandElem.value = ""
             }
         }
     }
