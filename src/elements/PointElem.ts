@@ -3,6 +3,7 @@ import {createSVGTagElem} from "../helper"
 import LabelElem from "./LabelElem"
 import PointElemParam from "./PointElemParam"
 import PointElems from "./PointElems"
+import PointStyle from "./PointStyle"
 
 export default class PointElem extends LabelElem {
     private x: number
@@ -183,5 +184,16 @@ export default class PointElem extends LabelElem {
 
     public onLeaveCallback(callback: () => void) {
         this.onLeaveCallbacks.push(callback)
+    }
+
+    public setStyle(style: PointStyle) {
+        console.log(style.fill)
+        if (style.fill != undefined) {
+            this.setFill(style.fill)
+        }
+
+        if (style.stroke != undefined) {
+            this.setStroke(style.stroke)
+        }
     }
 }

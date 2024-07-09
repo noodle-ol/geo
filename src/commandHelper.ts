@@ -1,4 +1,5 @@
 import ChangeLabelCommand from "./commands/ChangeLabelCommand"
+import ChangePointStyleCommand from "./commands/ChangePointStyleCommand"
 import CircleCommand from "./commands/CircleCommand"
 import Commands from "./commands/Commands"
 import FullscreenCommand from "./commands/FullscreenCommand"
@@ -25,6 +26,7 @@ export const commandStartup = () => {
     HideLabelCommand.getInstance()
     ShowLabelCommand.getInstance()
     ChangeLabelCommand.getInstance()
+    ChangePointStyleCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }
