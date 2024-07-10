@@ -10,6 +10,7 @@ export default class CurveElem extends LabelElem {
 
         this.stroke = stroke
         this.elem.setAttribute("stroke", this.stroke)
+        this.elem.setAttribute("fill", "transparent")
     }
 
     public setStroke(stroke: string) {
