@@ -8,11 +8,13 @@ import FullscreenCommand from "./commands/FullscreenCommand"
 import HideCommand from "./commands/HideCommand"
 import HideLabelCommand from "./commands/HideLabelCommand"
 import LineCommand from "./commands/LineCommand"
+import LockCommand from "./commands/LockCommand"
 import MouseCommand from "./commands/MouseCommand"
 import PointCommand from "./commands/PointCommand"
 import RemoveCommand from "./commands/RemoveCommand"
 import ShowCommand from "./commands/ShowCommand"
 import ShowLabelCommand from "./commands/ShowLabelCommand"
+import UnlockCommand from "./commands/UnlockCommand"
 import Elems from "./elements/Elems"
 
 export const commandStartup = () => {
@@ -31,6 +33,8 @@ export const commandStartup = () => {
     ChangePointStyleCommand.getInstance()
     ChangeCurveStyleCommand.getInstance()
     ChangeLabelStyleCommand.getInstance()
+    LockCommand.getInstance()
+    UnlockCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }

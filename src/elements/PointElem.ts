@@ -17,6 +17,7 @@ export default class PointElem extends LabelElem {
     private onLeaveCallbacks: (() => void)[]
     private isShow: boolean
     private isGhost: boolean
+    private isLock: boolean
 
     public constructor(x: number, y: number, label: Nullable<string>, params: PointElemParam) {
         const stroke = "red"
@@ -41,6 +42,7 @@ export default class PointElem extends LabelElem {
 
         super(pointElem, x, y, label, isShowLabel, ElemType.Point)
 
+        this.isLock = false
         this.isShow = isShow
         this.isGhost = isGhost
         this.x = x
@@ -80,6 +82,18 @@ export default class PointElem extends LabelElem {
             this.setLabel(mergeLabelCharLabelNum(labelChar, labelNum))
             this.showLabel()
         }
+    }
+
+    public lock() {
+        this.isLock = true
+    }
+
+    public unlock() {
+        this.isLock = false
+    }
+
+    public getIsLock(): boolean {
+        return this.isLock
     }
 
     public getX(): number {
@@ -183,7 +197,9 @@ export default class PointElem extends LabelElem {
     }
 
     public onmousemove(_e: MouseEvent) {
-        this.move(globalThis.mouseX, globalThis.mouseY)
+        if (!this.isLock) {
+            this.move(globalThis.mouseX, globalThis.mouseY)
+        }
     }
 
     public onLeaveCallback(callback: () => void) {
