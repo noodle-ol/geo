@@ -40,7 +40,7 @@ export default class LabelElem extends BaseElem {
         const labelElem = createSVGTagElem("text")
         labelElem.setAttribute("x", (parentX + this.relativeX).toString())
         labelElem.setAttribute("y", (parentY + this.relativeY).toString())
-        labelElem.classList.add("cursor-pointer")
+        labelElem.classList.add("cursor-pointer", "user-select-none")
         labelElem.innerHTML = this.label
         if (!this.isLabelShow) {
             labelElem.setAttribute("opacity", "0")
