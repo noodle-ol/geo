@@ -1,5 +1,6 @@
 import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem } from "../helper";
+import { mergeLabelCharLabelNum } from "../labelHelper";
 import { createLabel, removeLabel } from "../stateHelper";
 import BaseElem from "./BaseElem";
 import Elems from "./Elems";
@@ -25,11 +26,7 @@ export default class LabelElem extends BaseElem {
         if (label == null) {
             const [labelChar, labelNum] = createLabel(this.elemType)
 
-            if (labelNum == 0) {
-                this.label = labelChar
-            } else {
-                this.label = labelChar + "_" + labelNum
-            }
+            this.label = mergeLabelCharLabelNum(labelChar, labelNum)
         } else {
             this.label = label
         }

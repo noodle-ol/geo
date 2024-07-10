@@ -51,3 +51,11 @@ export const compareLabel = (firstChar: string, firstNum: number, secondChar: st
         }
     }
 }
+
+export const mergeLabelCharLabelNum = (char: string, num: number): string => {
+    if (num == 0) {
+        return char
+    } else {
+        return char + "_" + num
+    }
+}

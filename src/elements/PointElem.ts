@@ -1,5 +1,7 @@
 import { ElemType } from "../enum/ElemType"
 import {createSVGTagElem} from "../helper"
+import { mergeLabelCharLabelNum } from "../labelHelper"
+import { createLabel } from "../stateHelper"
 import LabelElem from "./LabelElem"
 import PointElemParam from "./PointElemParam"
 import PointElems from "./PointElems"
@@ -74,9 +76,10 @@ export default class PointElem extends LabelElem {
             this.elem.setAttribute("stroke-opacity", "1")
             this.elem.setAttribute("fill-opacity", "1")
             this.isShow = true
+            const [labelChar, labelNum] = createLabel(this.elemType)
+            this.setLabel(mergeLabelCharLabelNum(labelChar, labelNum))
             this.showLabel()
         }
-
     }
 
     public getX(): number {

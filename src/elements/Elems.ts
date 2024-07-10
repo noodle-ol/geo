@@ -1,3 +1,4 @@
+import { mergeLabelCharLabelNum } from "../labelHelper"
 import { createLabel } from "../stateHelper"
 import BaseElem from "./BaseElem"
 import ChoosableElem from "./IChoosableElem"
@@ -84,13 +85,7 @@ export default class Elems {
             const oldElem = this.mapElem.get(id)
             if (oldElem != null && oldElem instanceof LabelElem) {
                 const [labelChar, labelNum] = createLabel(oldElem.getElemType())
-                let oldElemLabel = ""
-
-                if (labelNum == 0) {
-                    oldElemLabel = labelChar
-                } else {
-                    oldElemLabel = labelChar + labelNum
-                }
+                let oldElemLabel = mergeLabelCharLabelNum(labelChar, labelNum)
 
                 oldElem.removeLabel()
                 oldElem.setLabel(oldElemLabel)
