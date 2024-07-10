@@ -1,5 +1,6 @@
 import Elem from "../elements/IElem"
 import LabelElem from "../elements/LabelElem"
+import PointElems from "../elements/PointElems"
 import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
 
@@ -19,9 +20,23 @@ export default class ShowLabelCommand extends BaseCommand {
         return ShowLabelCommand.instance
     }
 
+    private showLabelNoParam() {
+        Commands.instance.setCurrentCommand(ShowLabelCommand.instance)
+    }
+
     public execute(p: (Elem | string | number)[]) {
-        if (p.length == 1 && p[0] instanceof LabelElem) {
+        if (p.length == 0) {
+            this.showLabelNoParam()
+        } else if (p.length == 1 && p[0] instanceof LabelElem) {
             p[0].showLabel()
+        }
+    }
+
+    public onmousedown(e: MouseEvent) {
+        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        let pointElem = PointElems.instance.find(clientX, clientY)
+        if (pointElem != null && pointElem.getIsShow()) {
+            pointElem.showLabel()
         }
     }
 }
