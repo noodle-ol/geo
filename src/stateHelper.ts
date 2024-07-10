@@ -39,7 +39,6 @@ export const createLabel = (elemType: ElemType): [string, number] => {
     const unusedLabels = getUnusedLabels(elemType)
     if (unusedLabels.length > 0) {
         const compareLabelResult = compareLabel(nextLabelChar, nextLabelNum, unusedLabels[0][0], unusedLabels[0][1])
-        console.log(compareLabelResult)
         if (compareLabelResult == 1) {
             labelPointChar = unusedLabels[0][0]
             labelPointNum = unusedLabels[0][1]

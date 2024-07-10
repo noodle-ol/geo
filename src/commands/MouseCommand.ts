@@ -1,3 +1,4 @@
+import CurveElems from "../elements/CurveElems";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElems from "../elements/PointElems";
@@ -30,6 +31,12 @@ export default class MouseCommand extends BaseCommand {
         let pointElem = PointElems.instance.find(clientX, clientY)
         if (pointElem != null) {
             Elems.instance.select(pointElem)
+            return
+        }
+
+        let curveElem = CurveElems.instance.find(clientX, clientY)
+        if (curveElem != null) {
+            Elems.instance.select(curveElem)
             return
         }
 

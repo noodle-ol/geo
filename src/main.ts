@@ -5,6 +5,7 @@ import { commandStartup, execute } from './commandHelper'
 import Elems from './elements/Elems'
 import Commands from './commands/Commands'
 import { shortcut } from './shortcutHelper'
+import CurveElems from './elements/CurveElems'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
@@ -32,6 +33,7 @@ window.onload = (_e) => {
 
     Elems.getInstance(svgElem.getElem())
     PointElems.getInstance()
+    CurveElems.getInstance()
 
     commandStartup()
 

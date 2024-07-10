@@ -8,7 +8,6 @@ export default class LineElem extends CurveElem {
     private d: string
     private startPoint: PointElem
     private endPoint: PointElem
-    private isShow: boolean
 
     public constructor(startPoint: PointElem, endPoint: PointElem, label: Nullable<string>) {
         const d = `M ${startPoint.getX()} ${startPoint.getY()} L ${endPoint.getX()} ${endPoint.getY()}`
@@ -17,22 +16,30 @@ export default class LineElem extends CurveElem {
         lineElem.setAttribute("d", d)
 
         let equation = null
+        let distanceEquation = null
         if (startPoint.getX() == endPoint.getX()) {
             equation = (x: number, _y: number): number => {
                 return x - startPoint.getX()
+            }
+
+            distanceEquation = (x: number, _y: number): number => {
+                return Math.abs(x - startPoint.getX())
             }
         } else {
             equation = (x: number, y: number): number => {
                 return y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())
             }
+
+            distanceEquation = (x: number, y: number): number => {
+                return Math.abs(y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())) / Math.sqrt(1 + (Math.pow(startPoint.getY() - endPoint.getY(), 2) / Math.pow(startPoint.getX() - endPoint.getX(), 2)))
+            }
         }
 
-        super(lineElem, new CurveEquation(equation), "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
+        super(lineElem, new CurveEquation(equation, distanceEquation), "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
 
         this.d = d
         this.startPoint = startPoint
         this.endPoint = endPoint
-        this.isShow = true
 
         this.startPoint.onMove((_p) => {
             this.d = this.generateD()
@@ -62,23 +69,6 @@ export default class LineElem extends CurveElem {
         return `M ${startPointX} ${startPointY} L ${endPointX} ${endPointY}`
     }
 
-    public hide() {
-        if (this.isShow) {
-            this.elem.setAttribute("stroke-opacity", "0")
-            this.isShow = false
-            this.hideLabel()
-        }
-    }
-
-    public show() {
-        if (!this.isShow) {
-            this.elem.setAttribute("stroke-opacity", "1")
-            this.isShow = true
-            this.showLabel()
-        }
-
-    }
-
     public getElem(): SVGElement {
         return this.elem
     }
@@ -95,6 +85,28 @@ export default class LineElem extends CurveElem {
             this.d = this.generateD()
             this.elem.setAttribute("d", this.d)
         })
+
+        let equation = null
+        let distanceEquation = null
+        if (this.startPoint.getX() == this.endPoint.getX()) {
+            equation = (x: number, _y: number): number => {
+                return x - this.startPoint.getX()
+            }
+
+            distanceEquation = (x: number, _y: number): number => {
+                return Math.abs(x - this.startPoint.getX())
+            }
+        } else {
+            equation = (x: number, y: number): number => {
+                return y - this.endPoint.getY() - (this.startPoint.getY() - this.endPoint.getY()) * (x - this.endPoint.getX()) / (this.startPoint.getX() - this.endPoint.getX())
+            }
+
+            distanceEquation = (x: number, y: number): number => {
+                return Math.abs(y - this.endPoint.getY() - (this.startPoint.getY() - this.endPoint.getY()) * (x - this.endPoint.getX()) / (this.startPoint.getX() - this.endPoint.getX())) / Math.sqrt(1 + (Math.pow(this.startPoint.getY() - this.endPoint.getY(), 2) / Math.pow(this.startPoint.getX() - this.endPoint.getX(), 2)))
+            }
+        }
+
+        this.setEquation(new CurveEquation(equation, distanceEquation))
     }
 
     public remove() {

@@ -7,7 +7,6 @@ import PointElem from "./PointElem";
 export default class CircleElem extends CurveElem {
     private center: PointElem
     private p: PointElem
-    private isShow: boolean
 
     public constructor(center: PointElem, p: PointElem, label: Nullable<string>) {
         const elem = createSVGTagElem("circle")
@@ -16,14 +15,17 @@ export default class CircleElem extends CurveElem {
         elem.setAttribute("r", pointDistance(center, p).toString())
 
         const equation = (x: number, y: number): number => {
-            return (x - center.getX()) * (x - center.getX()) + (y - center.getY()) * (y - center.getY()) - (p.getX() - center.getX()) * (p.getX() - center.getX()) - (p.getY() - center.getY()) * (p.getY() - center.getY())
+            return Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2) - Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)
         }
 
-        super(elem, new CurveEquation(equation), "red", p.getX(), p.getY(), label, false, ElemType.Curve)
+        const distanceEquation = (x: number, y: number): number => {
+            return Math.abs(Math.sqrt(Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2)) - Math.sqrt(Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)))
+        }
+
+        super(elem, new CurveEquation(equation, distanceEquation), "red", p.getX(), p.getY(), label, false, ElemType.Curve)
 
         this.center = center
         this.p = p
-        this.isShow = true
 
         this.center.onMove((p: PointElem) => {
             elem.setAttribute("cx", p.getX().toString())
@@ -50,23 +52,6 @@ export default class CircleElem extends CurveElem {
         return this.elem
     }
 
-    public hide() {
-        if (this.isShow) {
-            this.elem.setAttribute("stroke-opacity", "0")
-            this.isShow = false
-            this.hideLabel()
-        }
-    }
-
-    public show() {
-        if (!this.isShow) {
-            this.elem.setAttribute("stroke-opacity", "1")
-            this.isShow = true
-            this.showLabel()
-        }
-
-    }
-
     public getP(): PointElem {
         return this.p
     }
@@ -77,6 +62,16 @@ export default class CircleElem extends CurveElem {
         this.p.onMove((p: PointElem) => {
             this.elem.setAttribute("r", pointDistance(this.center, p).toString())
         })
+
+        const equation = (x: number, y: number): number => {
+            return Math.pow(x - this.center.getX(), 2) + Math.pow(y - this.center.getY(), 2) - Math.pow(this.p.getX() - this.center.getX(), 2) - Math.pow(this.p.getY() - this.center.getY(), 2)
+        }
+
+        const distanceEquation = (x: number, y: number): number => {
+            return Math.abs(Math.sqrt(Math.pow(x - this.center.getX(), 2) + Math.pow(y - this.center.getY(), 2)) - Math.sqrt(Math.pow(this.p.getX() - this.center.getX(), 2) - Math.pow(this.p.getY() - this.center.getY(), 2)))
+        }
+
+        this.setEquation(new CurveEquation(equation, distanceEquation))
     }
 
     public remove() {
