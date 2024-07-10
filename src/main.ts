@@ -101,4 +101,8 @@ window.onload = (_e) => {
             }
         }
     }
+
+    window.onbeforeunload = () => {
+        return
+    }
 }
