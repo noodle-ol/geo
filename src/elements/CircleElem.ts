@@ -75,6 +75,7 @@ export default class CircleElem extends CurveElem {
     }
 
     public remove() {
+        this.removeLabel()
         this.elem.remove()
     }
 

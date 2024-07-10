@@ -142,6 +142,7 @@ export default class PointElem extends LabelElem {
     }
 
     public remove() {
+        this.removeLabel()
         this.labelElem.remove()
         this.elem.remove()
         if (!this.isGhost) {

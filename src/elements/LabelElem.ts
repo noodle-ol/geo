@@ -1,6 +1,6 @@
 import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem } from "../helper";
-import { createCurveLabel, createPointLabel } from "../stateHelper";
+import { createLabel, removeLabel } from "../stateHelper";
 import BaseElem from "./BaseElem";
 import Elems from "./Elems";
 import LabelStyle from "./LabelStyle";
@@ -13,25 +13,22 @@ export default class LabelElem extends BaseElem {
     protected isLabelShow: boolean
     protected labelStroke: string
     protected labelFill: string
+    protected elemType: ElemType
 
     public constructor(elem: SVGElement, parentX: number, parentY: number, label: Nullable<string>, isLabelShow: boolean, elemType: ElemType) {
         super(elem)
 
         this.relativeX = 5
         this.relativeY = 5
+        this.elemType = elemType
 
         if (label == null) {
-            let [labelChar, labelNum] = ['', 0]
-            if (elemType == ElemType.Point) {
-                [labelChar, labelNum] = createPointLabel()
-            } else if (elemType == ElemType.Curve) {
-                [labelChar, labelNum] = createCurveLabel()
-            }
+            const [labelChar, labelNum] = createLabel(this.elemType)
 
             if (labelNum == 0) {
                 this.label = labelChar
             } else {
-                this.label = labelChar + labelNum
+                this.label = labelChar + "_" + labelNum
             }
         } else {
             this.label = label
@@ -81,9 +78,17 @@ export default class LabelElem extends BaseElem {
         this.labelElem.setAttribute("y", (y + this.relativeY).toString())
     }
 
+    public getLabel(): string {
+        return this.label
+    }
+
     public setLabel(label: string) {
         this.label = label
         this.labelElem.innerHTML = this.label
+    }
+
+    public getElemType(): ElemType {
+        return this.elemType
     }
 
     public setLabelStroke(labelStroke: string) {
@@ -104,5 +109,9 @@ export default class LabelElem extends BaseElem {
         if (style.stroke != undefined) {
             this.setLabelStroke(style.stroke)
         }
+    } 
+
+    public removeLabel() {
+        removeLabel(this.label, this.elemType)
     }
 }

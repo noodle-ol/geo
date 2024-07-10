@@ -12,6 +12,8 @@ window.onload = (_e) => {
     globalThis.nextPointLabelNum = 0
     globalThis.nextCurveLabelChar = "a"
     globalThis.nextCurveLabelNum = 0
+    globalThis.unusedPointLabels = []
+    globalThis.unusedCurveLabels = []
 
     const mainElem: Nullable<HTMLElement> = document.getElementById("main")
     if (mainElem == null) {

@@ -86,6 +86,7 @@ export default class LineElem extends CurveElem {
     }
 
     public remove() {
+        this.removeLabel()
         this.elem.remove()
     }
 
