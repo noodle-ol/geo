@@ -14,4 +14,12 @@ export default class CurveEquation {
     public distance(x: number, y: number): number {
         return this.distanceEquation(x, y)
     }
+
+    public setEquation(equation: (x: number, y: number) => number) {
+        this.equation = equation
+    }
+
+    public setDistanceEquation(distanceEquation: (x: number, y: number) => number) {
+        this.distanceEquation = distanceEquation
+    }
 }

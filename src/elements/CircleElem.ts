@@ -4,6 +4,18 @@ import CurveElem from "./CurveElem";
 import CurveEquation from "./CurveEquation";
 import PointElem from "./PointElem";
 
+const createEquation = (center: PointElem, p: PointElem): [(x: number, y: number) => number, (x: number, y: number) => number] => {
+    const equation = (x: number, y: number): number => {
+        return Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2) - Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)
+    }
+
+    const distanceEquation = (x: number, y: number): number => {
+        return Math.abs(Math.sqrt(Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2)) - Math.sqrt(Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)))
+    }
+
+    return [equation, distanceEquation]
+}
+
 export default class CircleElem extends CurveElem {
     private center: PointElem
     private p: PointElem
@@ -14,13 +26,7 @@ export default class CircleElem extends CurveElem {
         elem.setAttribute("cy", center.getY().toString())
         elem.setAttribute("r", pointDistance(center, p).toString())
 
-        const equation = (x: number, y: number): number => {
-            return Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2) - Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)
-        }
-
-        const distanceEquation = (x: number, y: number): number => {
-            return Math.abs(Math.sqrt(Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2)) - Math.sqrt(Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)))
-        }
+        const [equation, distanceEquation] = createEquation(center, p)
 
         super(elem, new CurveEquation(equation, distanceEquation), "red", p.getX(), p.getY(), label, false, ElemType.Curve)
 
@@ -31,6 +37,10 @@ export default class CircleElem extends CurveElem {
             elem.setAttribute("cx", p.getX().toString())
             elem.setAttribute("cy", p.getY().toString())
             elem.setAttribute("r", pointDistance(p, this.p).toString())
+
+            const [equation, distanceEquation] = this.updateEquation()
+            this.equation.setEquation(equation)
+            this.equation.setDistanceEquation(distanceEquation)
         })
 
         this.center.onLeaveCallback(() => {
@@ -48,6 +58,10 @@ export default class CircleElem extends CurveElem {
         this.elem = elem
     }
 
+    private updateEquation(): [(x: number, y: number) => number, (x: number, y: number) => number] {
+        return createEquation(this.center, this.p)
+    }
+
     public getElem(): SVGElement {
         return this.elem
     }
@@ -63,15 +77,9 @@ export default class CircleElem extends CurveElem {
             this.elem.setAttribute("r", pointDistance(this.center, p).toString())
         })
 
-        const equation = (x: number, y: number): number => {
-            return Math.pow(x - this.center.getX(), 2) + Math.pow(y - this.center.getY(), 2) - Math.pow(this.p.getX() - this.center.getX(), 2) - Math.pow(this.p.getY() - this.center.getY(), 2)
-        }
-
-        const distanceEquation = (x: number, y: number): number => {
-            return Math.abs(Math.sqrt(Math.pow(x - this.center.getX(), 2) + Math.pow(y - this.center.getY(), 2)) - Math.sqrt(Math.pow(this.p.getX() - this.center.getX(), 2) - Math.pow(this.p.getY() - this.center.getY(), 2)))
-        }
-
-        this.setEquation(new CurveEquation(equation, distanceEquation))
+        const [equation, distanceEquation] = this.updateEquation()
+        this.equation.setEquation(equation)
+        this.equation.setDistanceEquation(distanceEquation)
     }
 
     public remove() {

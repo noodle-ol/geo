@@ -4,6 +4,30 @@ import { ElemType } from "../enum/ElemType"
 import CurveElem from "./CurveElem"
 import CurveEquation from "./CurveEquation"
 
+const createEquation = (startPoint: PointElem, endPoint: PointElem): [(x: number, y: number) => number, (x: number, y: number) => number] => {
+    let equation = null
+    let distanceEquation = null
+    if (startPoint.getX() == endPoint.getX()) {
+        equation = (x: number, _y: number): number => {
+            return x - startPoint.getX()
+        }
+
+        distanceEquation = (x: number, _y: number): number => {
+            return Math.abs(x - startPoint.getX())
+        }
+    } else {
+        equation = (x: number, y: number): number => {
+            return y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())
+        }
+
+        distanceEquation = (x: number, y: number): number => {
+            return Math.abs(y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())) / Math.sqrt(1 + (Math.pow(startPoint.getY() - endPoint.getY(), 2) / Math.pow(startPoint.getX() - endPoint.getX(), 2)))
+        }
+    }
+
+    return [equation, distanceEquation]
+}
+
 export default class LineElem extends CurveElem {
     private d: string
     private startPoint: PointElem
@@ -15,25 +39,7 @@ export default class LineElem extends CurveElem {
         const lineElem = createSVGTagElem("path")
         lineElem.setAttribute("d", d)
 
-        let equation = null
-        let distanceEquation = null
-        if (startPoint.getX() == endPoint.getX()) {
-            equation = (x: number, _y: number): number => {
-                return x - startPoint.getX()
-            }
-
-            distanceEquation = (x: number, _y: number): number => {
-                return Math.abs(x - startPoint.getX())
-            }
-        } else {
-            equation = (x: number, y: number): number => {
-                return y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())
-            }
-
-            distanceEquation = (x: number, y: number): number => {
-                return Math.abs(y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())) / Math.sqrt(1 + (Math.pow(startPoint.getY() - endPoint.getY(), 2) / Math.pow(startPoint.getX() - endPoint.getX(), 2)))
-            }
-        }
+        const [equation, distanceEquation] = createEquation(startPoint, endPoint)
 
         super(lineElem, new CurveEquation(equation, distanceEquation), "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
 
@@ -44,6 +50,10 @@ export default class LineElem extends CurveElem {
         this.startPoint.onMove((_p) => {
             this.d = this.generateD()
             this.elem.setAttribute("d", this.d)
+
+            const [equation, distanceEquation] = this.updateEquation()
+            this.equation.setEquation(equation)
+            this.equation.setDistanceEquation(distanceEquation)
         })
 
         this.startPoint.onLeaveCallback(() => {
@@ -58,6 +68,10 @@ export default class LineElem extends CurveElem {
         this.endPoint.onLeaveCallback(() => {
             this.remove()
         })
+    }
+
+    private updateEquation(): [(x: number, y: number) => number, (x: number, y: number) => number] {
+        return createEquation(this.startPoint, this.endPoint)
     }
 
     private generateD(): string {
@@ -86,27 +100,9 @@ export default class LineElem extends CurveElem {
             this.elem.setAttribute("d", this.d)
         })
 
-        let equation = null
-        let distanceEquation = null
-        if (this.startPoint.getX() == this.endPoint.getX()) {
-            equation = (x: number, _y: number): number => {
-                return x - this.startPoint.getX()
-            }
-
-            distanceEquation = (x: number, _y: number): number => {
-                return Math.abs(x - this.startPoint.getX())
-            }
-        } else {
-            equation = (x: number, y: number): number => {
-                return y - this.endPoint.getY() - (this.startPoint.getY() - this.endPoint.getY()) * (x - this.endPoint.getX()) / (this.startPoint.getX() - this.endPoint.getX())
-            }
-
-            distanceEquation = (x: number, y: number): number => {
-                return Math.abs(y - this.endPoint.getY() - (this.startPoint.getY() - this.endPoint.getY()) * (x - this.endPoint.getX()) / (this.startPoint.getX() - this.endPoint.getX())) / Math.sqrt(1 + (Math.pow(this.startPoint.getY() - this.endPoint.getY(), 2) / Math.pow(this.startPoint.getX() - this.endPoint.getX(), 2)))
-            }
-        }
-
-        this.setEquation(new CurveEquation(equation, distanceEquation))
+        const [equation, distanceEquation] = this.updateEquation()
+        this.equation.setEquation(equation)
+        this.equation.setDistanceEquation(distanceEquation)
     }
 
     public remove() {

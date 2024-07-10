@@ -67,8 +67,4 @@ export default class CurveElem extends LabelElem {
     public unchoose() {
         this.elem.setAttribute("stroke-width", this.strokeWidth.toString())
     }
-
-    public setEquation(equation: CurveEquation) {
-        this.equation = equation
-    }
 }
