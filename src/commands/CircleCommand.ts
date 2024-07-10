@@ -10,6 +10,7 @@ export default class CircleCommand extends BaseCommand {
     static instance: CircleCommand
     private isMouseDown: boolean
     private isMouseMove: boolean
+    private isGhostCircle: boolean
     private tempCircleElem: Nullable<CircleElem>
     private tempCenterElem: Nullable<PointElem>
     private tempPElem: Nullable<PointElem>
@@ -21,6 +22,7 @@ export default class CircleCommand extends BaseCommand {
         this.tempCircleElem = null
         this.tempCenterElem = null
         this.tempPElem = null
+        this.isGhostCircle = false
     }
 
      public static getInstance(): CircleCommand {
@@ -82,6 +84,7 @@ export default class CircleCommand extends BaseCommand {
                 p.remove()
             }
 
+            this.isGhostCircle = false
             this.tempCircleElem = null
             this.tempCenterElem = null
             this.tempPElem = null
@@ -90,13 +93,16 @@ export default class CircleCommand extends BaseCommand {
     }
 
     public onmousemove(e: MouseEvent) {
-        if (this.isMouseDown) {
-            this.isMouseMove = true
+        if (this.isMouseDown || this.isGhostCircle) {
             if (this.tempCircleElem != null) {
                 const p = this.tempCircleElem.getP()
                 const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
                 p.move(clientX, clientY)
             }
+        }
+
+        if (this.isMouseDown) {
+            this.isMouseMove = true
         }
     }
 
@@ -121,6 +127,8 @@ export default class CircleCommand extends BaseCommand {
                     this.tempPElem = null
                     Elems.instance.unselect()
                 }
+            } else {
+                this.isGhostCircle = true
             }
         }
     }

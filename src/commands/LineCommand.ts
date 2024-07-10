@@ -10,6 +10,7 @@ export default class LineCommand extends BaseCommand {
     static instance: LineCommand
     private isMouseDown: boolean
     private isMouseMove: boolean
+    private isGhostLine: boolean
     private tempLineElem: Nullable<LineElem>
     private tempStartPointElem: Nullable<PointElem>
     private tempEndPointElem: Nullable<PointElem>
@@ -21,6 +22,7 @@ export default class LineCommand extends BaseCommand {
         this.tempLineElem = null
         this.tempStartPointElem = null
         this.tempEndPointElem = null
+        this.isGhostLine = false
     }
 
     public static getInstance(): LineCommand {
@@ -82,6 +84,7 @@ export default class LineCommand extends BaseCommand {
                 endPoint.remove()
             }
             
+            this.isGhostLine = false
             this.tempLineElem = null
             this.tempStartPointElem = null
             this.tempEndPointElem = null
@@ -90,13 +93,16 @@ export default class LineCommand extends BaseCommand {
     }
 
     public onmousemove(e: MouseEvent) {
-        if (this.isMouseDown) {
-            this.isMouseMove = true
+        if (this.isMouseDown || this.isGhostLine) {
             if (this.tempLineElem != null) {
                 const endPoint = this.tempLineElem.getEndPoint()
                 const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
                 endPoint.move(clientX, clientY)
             }
+        }
+
+        if (this.isMouseDown) {
+            this.isMouseMove = true
         }
     }
 
@@ -120,6 +126,8 @@ export default class LineCommand extends BaseCommand {
                     this.tempEndPointElem = null
                     Elems.instance.unselect()
                 }
+            } else {
+                this.isGhostLine = true
             }
         }
     }
