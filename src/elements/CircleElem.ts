@@ -1,6 +1,7 @@
 import { ElemType } from "../enum/ElemType";
 import { createSVGTagElem, pointDistance } from "../helper";
 import CurveElem from "./CurveElem";
+import CurveEquation from "./CurveEquation";
 import PointElem from "./PointElem";
 
 export default class CircleElem extends CurveElem {
@@ -14,7 +15,11 @@ export default class CircleElem extends CurveElem {
         elem.setAttribute("cy", center.getY().toString())
         elem.setAttribute("r", pointDistance(center, p).toString())
 
-        super(elem, "red", p.getX(), p.getY(), label, false, ElemType.Curve)
+        const equation = (x: number, y: number): number => {
+            return (x - center.getX()) * (x - center.getX()) + (y - center.getY()) * (y - center.getY()) - (p.getX() - center.getX()) * (p.getX() - center.getX()) - (p.getY() - center.getY()) * (p.getY() - center.getY())
+        }
+
+        super(elem, new CurveEquation(equation), "red", p.getX(), p.getY(), label, false, ElemType.Curve)
 
         this.center = center
         this.p = p

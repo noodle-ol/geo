@@ -2,6 +2,7 @@ import PointElem from "./PointElem"
 import {createSVGTagElem} from "../helper"
 import { ElemType } from "../enum/ElemType"
 import CurveElem from "./CurveElem"
+import CurveEquation from "./CurveEquation"
 
 export default class LineElem extends CurveElem {
     private d: string
@@ -15,7 +16,18 @@ export default class LineElem extends CurveElem {
         const lineElem = createSVGTagElem("path")
         lineElem.setAttribute("d", d)
 
-        super(lineElem, "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
+        let equation = null
+        if (startPoint.getX() == endPoint.getX()) {
+            equation = (x: number, _y: number): number => {
+                return x - startPoint.getX()
+            }
+        } else {
+            equation = (x: number, y: number): number => {
+                return y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())
+            }
+        }
+
+        super(lineElem, new CurveEquation(equation), "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
 
         this.d = d
         this.startPoint = startPoint
