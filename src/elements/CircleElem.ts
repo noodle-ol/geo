@@ -1,24 +1,13 @@
 import { ElemType } from "../enum/ElemType";
-import { createSVGTagElem, pointDistance } from "../helper";
+import { createSVGTagElem, distance, pointDistance } from "../helper";
+import CircleEquation from "./CircleEquation";
 import CurveElem from "./CurveElem";
-import CurveEquation from "./CurveEquation";
 import PointElem from "./PointElem";
-
-const createEquation = (center: PointElem, p: PointElem): [(x: number, y: number) => number, (x: number, y: number) => number] => {
-    const equation = (x: number, y: number): number => {
-        return Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2) - Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)
-    }
-
-    const distanceEquation = (x: number, y: number): number => {
-        return Math.abs(Math.sqrt(Math.pow(x - center.getX(), 2) + Math.pow(y - center.getY(), 2)) - Math.sqrt(Math.pow(p.getX() - center.getX(), 2) - Math.pow(p.getY() - center.getY(), 2)))
-    }
-
-    return [equation, distanceEquation]
-}
 
 export default class CircleElem extends CurveElem {
     private center: PointElem
     private p: PointElem
+    protected equation: CircleEquation
 
     public constructor(center: PointElem, p: PointElem, label: Nullable<string>) {
         const elem = createSVGTagElem("circle")
@@ -26,10 +15,11 @@ export default class CircleElem extends CurveElem {
         elem.setAttribute("cy", center.getY().toString())
         elem.setAttribute("r", pointDistance(center, p).toString())
 
-        const [equation, distanceEquation] = createEquation(center, p)
+        const equation = new CircleEquation(center.getX(), center.getY(), p.getX(), p.getY())
 
-        super(elem, new CurveEquation(equation, distanceEquation), "red", p.getX(), p.getY(), label, false, ElemType.Curve)
+        super(elem, equation, "red", p.getX(), p.getY(), label, false, ElemType.Curve)
 
+        this.equation = equation
         this.center = center
         this.p = p
 
@@ -38,9 +28,7 @@ export default class CircleElem extends CurveElem {
             elem.setAttribute("cy", p.getY().toString())
             elem.setAttribute("r", pointDistance(p, this.p).toString())
 
-            const [equation, distanceEquation] = this.updateEquation()
-            this.equation.setEquation(equation)
-            this.equation.setDistanceEquation(distanceEquation)
+            this.updateEquation()
         })
 
         this.center.onLeaveCallback(() => {
@@ -58,8 +46,8 @@ export default class CircleElem extends CurveElem {
         this.elem = elem
     }
 
-    private updateEquation(): [(x: number, y: number) => number, (x: number, y: number) => number] {
-        return createEquation(this.center, this.p)
+    public updateEquation() {
+        this.equation.update(this.center.getX(), this.center.getY(), this.p.getX(), this.p.getY())
     }
 
     public getElem(): SVGElement {
@@ -77,9 +65,7 @@ export default class CircleElem extends CurveElem {
             this.elem.setAttribute("r", pointDistance(this.center, p).toString())
         })
 
-        const [equation, distanceEquation] = this.updateEquation()
-        this.equation.setEquation(equation)
-        this.equation.setDistanceEquation(distanceEquation)
+        this.updateEquation()
     }
 
     public remove() {
@@ -87,11 +73,37 @@ export default class CircleElem extends CurveElem {
         this.elem.remove()
     }
 
-    public onmousedown(_e: MouseEvent) {
+    public onmousedown(_e: MouseEvent) {}
 
-    }
+    public onmousemove(_e: MouseEvent) {}
 
-    public onmousemove(_e: MouseEvent) {
+    public getFoot(x: number, y: number): [number, number] {
+        const k = this.equation.getK()
+        const h = this.equation.getH()
+        const r = this.equation.getR()
 
+        const x1 = this.center.getX()
+        const y1 = this.center.getY()
+        const m = (y1 - y) / (x1 - x)
+        const b = y - (y1 - y) * x / (x1 - x)
+
+        const betta = 2*m*b - 2*k*m - 2*h
+        const alpha = m*m + 1
+        const delta = Math.pow(betta, 2) - 4*alpha*(b*b - 2*k*b + k*k + h*h - r)
+
+        const resultX1 = (-betta + Math.sqrt(delta))/(2 * alpha)
+        const resultX2 = (-betta - Math.sqrt(delta))/(2 * alpha)
+
+        const resultY1 = m * resultX1 + b
+        const resultY2 = m * resultX2 + b
+
+        const distanceX1 = distance(resultX1, resultY1, x, y)
+        const distanceX2 = distance(resultX2, resultY2, x, y)
+
+        if (distanceX1 < distanceX2) {
+            return [resultX1, resultY1]
+        }
+
+        return [resultX2, resultY2]
     }
 }

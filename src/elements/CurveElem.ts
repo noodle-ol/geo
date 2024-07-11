@@ -67,4 +67,10 @@ export default class CurveElem extends LabelElem {
     public unchoose() {
         this.elem.setAttribute("stroke-width", this.strokeWidth.toString())
     }
+
+    public getFoot(x: number, y: number): [number, number] {
+        return [x, y]
+    }
+
+    public updateEquation(){}
 }

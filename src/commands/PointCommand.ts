@@ -1,6 +1,8 @@
 import Actions from "../actions/Actions";
 import CreatePointElemAction from "../actions/CreatePointElemAction";
 import { getCoorByMouseEvent } from "../coorHelper";
+import CurveElems from "../elements/CurveElems";
+import CurvePointElem from "../elements/CurvePointElem";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElem from "../elements/PointElem";
@@ -53,6 +55,14 @@ export default class PointCommand extends BaseCommand {
         const [clientX, clientY] = getCoorByMouseEvent(e)
         let pointElem = PointElems.instance.find(clientX, clientY)
         if (pointElem != null) {
+            Elems.instance.select(pointElem)
+            return
+        }
+
+        let curveElem = CurveElems.instance.find(clientX, clientY)
+        if (curveElem != null) {
+            pointElem = new CurvePointElem(clientX, clientY, null, curveElem, {})
+            Actions.instance.push(new CreatePointElemAction(pointElem))
             Elems.instance.select(pointElem)
             return
         }

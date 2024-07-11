@@ -80,6 +80,7 @@ export default class LineCommand extends BaseCommand {
             if (pointElem == null) {
                 endPoint.move(clientX, clientY)
                 endPoint.setIsGhost(false)
+                this.tempLineElem.updateEquation()
             } else {
                 this.tempLineElem.setEndPoint(pointElem)
                 endPoint.remove()
@@ -118,6 +119,7 @@ export default class LineCommand extends BaseCommand {
                     const endPoint = this.tempLineElem.getEndPoint()
                     if (pointElem == null) {
                         endPoint.setIsGhost(false)
+                        this.tempLineElem.updateEquation()
                     } else {
                         this.tempLineElem.setEndPoint(pointElem)
                         endPoint.remove()

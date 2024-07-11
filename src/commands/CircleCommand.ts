@@ -80,6 +80,7 @@ export default class CircleCommand extends BaseCommand {
             if (pointElem == null) {
                 p.move(clientX, clientY)
                 p.setIsGhost(false)
+                this.tempCircleElem.updateEquation()
             } else {
                 this.tempCircleElem.setP(pointElem)
                 p.remove()
@@ -118,6 +119,7 @@ export default class CircleCommand extends BaseCommand {
                     const p = this.tempCircleElem.getP()
                     if (pointElem == null) {
                         p.setIsGhost(false)
+                        this.tempCircleElem.updateEquation()
                     } else {
                         this.tempCircleElem.setP(pointElem)
                         p.remove()

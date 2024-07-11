@@ -8,16 +8,16 @@ import PointElems from "./PointElems"
 import PointStyle from "./PointStyle"
 
 export default class PointElem extends LabelElem {
-    private x: number
-    private y: number
-    private r: number
-    private stroke: string
-    private fill: string
-    private onMoveCallbacks: ((p: PointElem) => void)[]
-    private onLeaveCallbacks: (() => void)[]
-    private isShow: boolean
-    private isGhost: boolean
-    private isLock: boolean
+    protected x: number
+    protected y: number
+    protected r: number
+    protected stroke: string
+    protected fill: string
+    protected onMoveCallbacks: ((p: PointElem) => void)[]
+    protected onLeaveCallbacks: (() => void)[]
+    protected isShow: boolean
+    protected isGhost: boolean
+    protected isLock: boolean
 
     public constructor(x: number, y: number, label: Nullable<string>, params: PointElemParam) {
         const stroke = "red"

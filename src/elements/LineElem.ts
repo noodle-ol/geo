@@ -2,36 +2,13 @@ import PointElem from "./PointElem"
 import {createSVGTagElem} from "../helper"
 import { ElemType } from "../enum/ElemType"
 import CurveElem from "./CurveElem"
-import CurveEquation from "./CurveEquation"
-
-const createEquation = (startPoint: PointElem, endPoint: PointElem): [(x: number, y: number) => number, (x: number, y: number) => number] => {
-    let equation = null
-    let distanceEquation = null
-    if (startPoint.getX() == endPoint.getX()) {
-        equation = (x: number, _y: number): number => {
-            return x - startPoint.getX()
-        }
-
-        distanceEquation = (x: number, _y: number): number => {
-            return Math.abs(x - startPoint.getX())
-        }
-    } else {
-        equation = (x: number, y: number): number => {
-            return y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())
-        }
-
-        distanceEquation = (x: number, y: number): number => {
-            return Math.abs(y - endPoint.getY() - (startPoint.getY() - endPoint.getY()) * (x - endPoint.getX()) / (startPoint.getX() - endPoint.getX())) / Math.sqrt(1 + (Math.pow(startPoint.getY() - endPoint.getY(), 2) / Math.pow(startPoint.getX() - endPoint.getX(), 2)))
-        }
-    }
-
-    return [equation, distanceEquation]
-}
+import LineEquation from "./LineEquation"
 
 export default class LineElem extends CurveElem {
     private d: string
     private startPoint: PointElem
     private endPoint: PointElem
+    protected equation: LineEquation
 
     public constructor(startPoint: PointElem, endPoint: PointElem, label: Nullable<string>) {
         const d = `M ${startPoint.getX()} ${startPoint.getY()} L ${endPoint.getX()} ${endPoint.getY()}`
@@ -39,9 +16,11 @@ export default class LineElem extends CurveElem {
         const lineElem = createSVGTagElem("path")
         lineElem.setAttribute("d", d)
 
-        const [equation, distanceEquation] = createEquation(startPoint, endPoint)
+        const equation = new LineEquation(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY())
 
-        super(lineElem, new CurveEquation(equation, distanceEquation), "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
+        super(lineElem, equation, "red", startPoint.getX(), startPoint.getY(), label, false, ElemType.Curve)
+
+        this.equation = equation
 
         this.d = d
         this.startPoint = startPoint
@@ -51,9 +30,7 @@ export default class LineElem extends CurveElem {
             this.d = this.generateD()
             this.elem.setAttribute("d", this.d)
 
-            const [equation, distanceEquation] = this.updateEquation()
-            this.equation.setEquation(equation)
-            this.equation.setDistanceEquation(distanceEquation)
+            this.updateEquation()
         })
 
         this.startPoint.onLeaveCallback(() => {
@@ -70,8 +47,8 @@ export default class LineElem extends CurveElem {
         })
     }
 
-    private updateEquation(): [(x: number, y: number) => number, (x: number, y: number) => number] {
-        return createEquation(this.startPoint, this.endPoint)
+    public updateEquation() {
+        this.equation.update(this.startPoint.getX(), this.startPoint.getY(), this.endPoint.getX(), this.endPoint.getY())
     }
 
     private generateD(): string {
@@ -100,9 +77,7 @@ export default class LineElem extends CurveElem {
             this.elem.setAttribute("d", this.d)
         })
 
-        const [equation, distanceEquation] = this.updateEquation()
-        this.equation.setEquation(equation)
-        this.equation.setDistanceEquation(distanceEquation)
+        this.updateEquation()
     }
 
     public remove() {
@@ -110,11 +85,20 @@ export default class LineElem extends CurveElem {
         this.elem.remove()
     }
 
-    public onmousedown(_e: MouseEvent) {
+    public onmousedown(_e: MouseEvent) {}
 
-    }
+    public onmousemove(_e: MouseEvent) {}
 
-    public onmousemove(_e: MouseEvent) {
+    public getFoot(x: number, y: number): [number, number] {
+        const m = this.equation.getM()
+        const b = this.equation.getB()
 
+        const m1 = 1/m
+        const b1 = y - m1 * x
+
+        const resultX = (b1 - b)/ (m - m1)
+        const resultY = m * resultX + b
+
+        return [resultX, resultY]
     }
 }
