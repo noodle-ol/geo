@@ -1,3 +1,4 @@
+import { getCoorByMouseEvent } from "../coorHelper";
 import CircleElem from "../elements/CircleElem";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
@@ -57,7 +58,7 @@ export default class CircleCommand extends BaseCommand {
     }
 
     public onmousedown(e: MouseEvent) {
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         if (this.tempCircleElem == null) {
             this.isMouseDown = true
             let pointElem = PointElems.instance.find(clientX, clientY)
@@ -96,7 +97,7 @@ export default class CircleCommand extends BaseCommand {
         if (this.isMouseDown || this.isGhostCircle) {
             if (this.tempCircleElem != null) {
                 const p = this.tempCircleElem.getP()
-                const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+                const [clientX, clientY] = getCoorByMouseEvent(e)
                 p.move(clientX, clientY)
             }
         }
@@ -107,7 +108,7 @@ export default class CircleCommand extends BaseCommand {
     }
 
     public onmouseup(e: MouseEvent) {
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         if (this.isMouseDown) {
             this.isMouseDown = false
             if (this.isMouseMove) {

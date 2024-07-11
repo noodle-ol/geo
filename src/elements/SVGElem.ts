@@ -14,6 +14,10 @@ export default class SVGElem {
         svgElem.setAttribute("version", "1.1")
         svgElem.setAttribute("width", this.width.toString())
         svgElem.setAttribute("height", this.height.toString())
+        svgElem.setAttribute("viewBox", `-${this.width/2} -${this.height/2} ${this.width} ${this.height}`)
+
+        globalThis.coorCenterX = this.width/2
+        globalThis.coorCenterY = this.height/2
 
         this.elem = svgElem
     }

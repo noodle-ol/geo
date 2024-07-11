@@ -1,3 +1,4 @@
+import { getCoorByMouseEvent } from "../coorHelper"
 import Elem from "../elements/IElem"
 import LabelElem from "../elements/LabelElem"
 import PointElems from "../elements/PointElems"
@@ -33,7 +34,7 @@ export default class ShowLabelCommand extends BaseCommand {
     }
 
     public onmousedown(e: MouseEvent) {
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         let pointElem = PointElems.instance.find(clientX, clientY)
         if (pointElem != null && pointElem.getIsShow()) {
             pointElem.showLabel()

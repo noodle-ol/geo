@@ -1,5 +1,6 @@
 import Actions from "../actions/Actions";
 import CreatePointElemAction from "../actions/CreatePointElemAction";
+import { getCoorByMouseEvent } from "../coorHelper";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElem from "../elements/PointElem";
@@ -49,7 +50,7 @@ export default class PointCommand extends BaseCommand {
 
     public onmousedown(e: MouseEvent) {
         this.isMouseDown = true
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         let pointElem = PointElems.instance.find(clientX, clientY)
         if (pointElem != null) {
             Elems.instance.select(pointElem)

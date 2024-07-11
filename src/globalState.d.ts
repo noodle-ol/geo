@@ -12,3 +12,6 @@ declare var mouseY: number
 declare var currentShortcut: string
 declare var unusedPointLabels: [string, number][]
 declare var unusedCurveLabels: [string, number][]
+
+declare var coorCenterX: number
+declare var coorCenterY: number

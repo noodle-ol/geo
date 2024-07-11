@@ -1,3 +1,4 @@
+import { getCoorByMouseEvent } from "../coorHelper";
 import CurveElems from "../elements/CurveElems";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
@@ -27,7 +28,7 @@ export default class MouseCommand extends BaseCommand {
 
     public onmousedown(e: MouseEvent) {
         this.isMouseDown = true
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         let pointElem = PointElems.instance.find(clientX, clientY)
         if (pointElem != null) {
             Elems.instance.select(pointElem)

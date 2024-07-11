@@ -7,6 +7,7 @@ import Commands from './commands/Commands'
 import { shortcut } from './shortcutHelper'
 import CurveElems from './elements/CurveElems'
 import Actions from './actions/Actions'
+import { getCoorByMouseEvent } from './coorHelper'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
@@ -16,6 +17,8 @@ window.onload = (_e) => {
     globalThis.nextCurveLabelNum = 0
     globalThis.unusedPointLabels = []
     globalThis.unusedCurveLabels = []
+    globalThis.coorCenterX = 0
+    globalThis.coorCenterY = 0
 
     const actions: Actions = Actions.getInstance()
 
@@ -46,8 +49,9 @@ window.onload = (_e) => {
     }
 
     mainElem.onmousemove = (e) => {
-        globalThis.mouseX = e.clientX - globalThis.mainLeftMargin
-        globalThis.mouseY = e.clientY
+        const [relativeMouseX, relativeMouseY] = getCoorByMouseEvent(e)
+        globalThis.mouseX = relativeMouseX
+        globalThis.mouseY = relativeMouseY
 
         Commands.instance.getCurrentCommand().onmousemove(e)
     }

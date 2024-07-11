@@ -1,3 +1,4 @@
+import { getCoorByMouseEvent } from "../coorHelper"
 import Elems from "../elements/Elems"
 import Elem from "../elements/IElem"
 import LineElem from "../elements/LineElem"
@@ -57,7 +58,7 @@ export default class LineCommand extends BaseCommand {
     }
 
     public onmousedown(e: MouseEvent) {
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         if (this.tempLineElem == null) {
             this.isMouseDown = true
             let pointElem = PointElems.instance.find(clientX, clientY)
@@ -96,7 +97,7 @@ export default class LineCommand extends BaseCommand {
         if (this.isMouseDown || this.isGhostLine) {
             if (this.tempLineElem != null) {
                 const endPoint = this.tempLineElem.getEndPoint()
-                const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+                const [clientX, clientY] = getCoorByMouseEvent(e)
                 endPoint.move(clientX, clientY)
             }
         }
@@ -107,7 +108,7 @@ export default class LineCommand extends BaseCommand {
     }
 
     public onmouseup(e: MouseEvent) {
-        const [clientX, clientY] = [e.clientX - globalThis.mainLeftMargin, e.clientY]
+        const [clientX, clientY] = getCoorByMouseEvent(e)
         if (this.isMouseDown) {
             this.isMouseDown = false
             if (this.isMouseMove) {
