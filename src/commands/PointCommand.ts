@@ -1,3 +1,5 @@
+import Actions from "../actions/Actions";
+import CreatePointElemAction from "../actions/CreatePointElemAction";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
 import PointElem from "../elements/PointElem";
@@ -55,6 +57,7 @@ export default class PointCommand extends BaseCommand {
         }
 
         pointElem = new PointElem(clientX, clientY, null, {})
+        Actions.instance.push(new CreatePointElemAction(pointElem))
         Elems.instance.select(pointElem)
     }
 

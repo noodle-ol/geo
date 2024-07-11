@@ -6,6 +6,7 @@ import Elems from './elements/Elems'
 import Commands from './commands/Commands'
 import { shortcut } from './shortcutHelper'
 import CurveElems from './elements/CurveElems'
+import Actions from './actions/Actions'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
@@ -15,6 +16,8 @@ window.onload = (_e) => {
     globalThis.nextCurveLabelNum = 0
     globalThis.unusedPointLabels = []
     globalThis.unusedCurveLabels = []
+
+    const actions: Actions = Actions.getInstance()
 
     const mainElem: Nullable<HTMLElement> = document.getElementById("main")
     if (mainElem == null) {
@@ -53,12 +56,13 @@ window.onload = (_e) => {
         Commands.instance.getCurrentCommand().onmouseup(e)
     }
 
-    // document.onkeydown = (e) => {
-    //     if (e.ctrlKey) {
-    //         elemQueue.pop()?.remove()
-    //         return
-    //     } 
-    // }
+    document.onkeydown = (e) => {
+        if (e.ctrlKey && e.key == 'z') {
+            actions.reverse()
+        } else if (e.ctrlKey && e.key == 'y') {
+            actions.backward()
+        }
+    }
 
     document.onkeyup = (e) => {
         if (e.key == "/") {

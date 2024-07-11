@@ -15,6 +15,7 @@ export default class LabelElem extends BaseElem {
     protected labelStroke: string
     protected labelFill: string
     protected elemType: ElemType
+    protected deprecatedLabel: boolean;
 
     public constructor(elem: SVGElement, parentX: number, parentY: number, label: Nullable<string>, isLabelShow: boolean, elemType: ElemType) {
         super(elem)
@@ -22,6 +23,7 @@ export default class LabelElem extends BaseElem {
         this.relativeX = 5
         this.relativeY = 5
         this.elemType = elemType
+        this.deprecatedLabel = false
 
         if (label == null) {
             const [labelChar, labelNum] = createLabel(this.elemType)
@@ -64,6 +66,20 @@ export default class LabelElem extends BaseElem {
         if (this.isLabelShow) {
             this.isLabelShow = false
             this.labelElem.setAttribute("opacity", "0")
+        }
+    }
+
+    public reverseLabel() {
+        if (!this.deprecatedLabel) {
+            this.deprecatedLabel = true
+            this.labelElem.setAttribute("opacity", "0")
+        }
+    }
+
+    public backwardLabel() {
+        if (this.deprecatedLabel) {
+            this.deprecatedLabel = false
+            this.labelElem.setAttribute("opacity", "1")
         }
     }
 

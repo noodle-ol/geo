@@ -5,10 +5,12 @@ import ChoosableElem from "./IChoosableElem";
 export default class BaseElem implements ChoosableElem {
     protected elem: SVGElement
     protected id: number
+    protected deprecated: boolean
 
     public constructor(elem: SVGElement) {
         this.elem = elem
         this.id = createId()
+        this.deprecated = false
 
         Elems.instance.set(this.id, this)
         Elems.instance.appendChild(this.elem)

@@ -84,6 +84,24 @@ export default class PointElem extends LabelElem {
         }
     }
 
+    public reverse() {
+        if (!this.deprecated) {
+            this.deprecated = true
+            this.elem.setAttribute("stroke-opacity", "0")
+            this.elem.setAttribute("fill-opacity", "0")
+            this.reverseLabel()
+        }
+    }
+
+    public backward() {
+        if (this.deprecated) {
+            this.deprecated = false
+            this.elem.setAttribute("stroke-opacity", "1")
+            this.elem.setAttribute("fill-opacity", "1")
+            this.backwardLabel()
+        }
+    }
+
     public lock() {
         this.isLock = true
     }
