@@ -1,9 +1,9 @@
-import { mergeLabelCharLabelNum } from "../labelHelper"
-import { createLabel } from "../stateHelper"
+import { mergeLabelCharLabelNum } from "../helpers/labelHelper"
+import { createLabel } from "../helpers/stateHelper"
 import BaseElem from "./BaseElem"
 import ChoosableElem from "./IChoosableElem"
 import Elem from "./IElem"
-import LabelElem from "./LabelElem"
+import LabelElem from "./label/LabelElem"
 
 export default class Elems {
     static instance: Elems

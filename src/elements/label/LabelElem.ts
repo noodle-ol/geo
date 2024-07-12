@@ -1,9 +1,9 @@
-import { ElemType } from "../enum/ElemType";
-import { createSVGTagElem } from "../helper";
-import { mergeLabelCharLabelNum } from "../labelHelper";
-import { createLabel, removeLabel } from "../stateHelper";
-import BaseElem from "./BaseElem";
-import Elems from "./Elems";
+import { ElemType } from "../../enum/ElemType";
+import { createSVGTagElem } from "../../helpers/helper";
+import { mergeLabelCharLabelNum } from "../../helpers/labelHelper";
+import { createLabel, removeLabel } from "../../helpers/stateHelper";
+import BaseElem from "../BaseElem";
+import Elems from "../Elems";
 import LabelStyle from "./LabelStyle";
 
 export default class LabelElem extends BaseElem {

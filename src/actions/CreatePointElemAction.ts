@@ -1,4 +1,4 @@
-import PointElem from "../elements/PointElem";
+import PointElem from "../elements/point/PointElem";
 import Action from "./IAction";
 
 export default class CreatePointElemAction implements Action {

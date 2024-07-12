@@ -1,13 +1,13 @@
 import './css/main.css'
 import SVGElem from './elements/SVGElem'
-import PointElems from './elements/PointElems'
-import { commandStartup, execute } from './commandHelper'
+import PointElems from './elements/point/PointElems'
+import { commandStartup, execute } from './helpers/commandHelper'
 import Elems from './elements/Elems'
 import Commands from './commands/Commands'
-import { shortcut } from './shortcutHelper'
-import CurveElems from './elements/CurveElems'
+import { shortcut } from './helpers/shortcutHelper'
+import CurveElems from './elements/curve/CurveElems'
 import Actions from './actions/Actions'
-import { getCoorByMouseEvent } from './coorHelper'
+import { getCoorByMouseEvent } from './helpers/coorHelper'
 
 window.onload = (_e) => {
     globalThis.nextId = 1

@@ -1,7 +1,7 @@
-import { getCoorByMouseEvent } from "../coorHelper"
+import { getCoorByMouseEvent } from "../helpers/coorHelper"
 import Elem from "../elements/IElem"
-import LabelElem from "../elements/LabelElem"
-import PointElems from "../elements/PointElems"
+import LabelElem from "../elements/label/LabelElem"
+import PointElems from "../elements/point/PointElems"
 import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
 

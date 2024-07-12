@@ -1,12 +1,12 @@
 import Actions from "../actions/Actions";
 import CreatePointElemAction from "../actions/CreatePointElemAction";
-import { getCoorByMouseEvent } from "../coorHelper";
-import CurveElems from "../elements/CurveElems";
-import CurvePointElem from "../elements/CurvePointElem";
+import { getCoorByMouseEvent } from "../helpers/coorHelper";
+import CurveElems from "../elements/curve/CurveElems";
+import CurvePointElem from "../elements/curve/CurvePointElem";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
-import PointElem from "../elements/PointElem";
-import PointElems from "../elements/PointElems";
+import PointElem from "../elements/point/PointElem";
+import PointElems from "../elements/point/PointElems";
 import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
 

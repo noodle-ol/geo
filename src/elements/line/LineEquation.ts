@@ -1,5 +1,5 @@
-import { createLineDistanceEquation, createLineEquation } from "../equationHelper"
-import CurveEquation from "./CurveEquation"
+import { createLineDistanceEquation, createLineEquation } from "../../helpers/equationHelper"
+import CurveEquation from "../curve/CurveEquation"
 
 // y = mx + b
 export default class LineEquation extends CurveEquation {

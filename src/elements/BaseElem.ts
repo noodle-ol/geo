@@ -1,4 +1,4 @@
-import { createId } from "../stateHelper";
+import { createId } from "../helpers/stateHelper";
 import Elems from "./Elems";
 import ChoosableElem from "./IChoosableElem";
 

@@ -1,5 +1,5 @@
-import CurveElem from "../elements/CurveElem"
-import CurveStyle from "../elements/CurveStyle"
+import CurveElem from "../elements/curve/CurveElem"
+import CurveStyle from "../elements/curve/CurveStyle"
 import Elems from "../elements/Elems"
 import Elem from "../elements/IElem"
 import BaseCommand from "./BaseCommand"

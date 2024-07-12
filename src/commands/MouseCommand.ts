@@ -1,8 +1,8 @@
-import { getCoorByMouseEvent } from "../coorHelper";
-import CurveElems from "../elements/CurveElems";
+import { getCoorByMouseEvent } from "../helpers/coorHelper";
+import CurveElems from "../elements/curve/CurveElems";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
-import PointElems from "../elements/PointElems";
+import PointElems from "../elements/point/PointElems";
 import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
 

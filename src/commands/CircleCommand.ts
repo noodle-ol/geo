@@ -1,9 +1,9 @@
-import { getCoorByMouseEvent } from "../coorHelper";
-import CircleElem from "../elements/CircleElem";
+import { getCoorByMouseEvent } from "../helpers/coorHelper";
+import CircleElem from "../elements/circle/CircleElem";
 import Elems from "../elements/Elems";
 import Elem from "../elements/IElem";
-import PointElem from "../elements/PointElem";
-import PointElems from "../elements/PointElems";
+import PointElem from "../elements/point/PointElem";
+import PointElems from "../elements/point/PointElems";
 import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
 

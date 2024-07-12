@@ -1,8 +1,8 @@
-import { ElemType } from "../enum/ElemType";
+import { ElemType } from "../../enum/ElemType";
 import CurveElems from "./CurveElems";
 import CurveEquation from "./CurveEquation";
 import CurveStyle from "./CurveStyle";
-import LabelElem from "./LabelElem";
+import LabelElem from "../label/LabelElem";
 
 export default class CurveElem extends LabelElem {
     protected stroke: string

@@ -1,4 +1,4 @@
-import { ElemType } from "./enum/ElemType"
+import { ElemType } from "../enum/ElemType"
 import { compareLabel, isValidChar, parseLabel } from "./labelHelper"
 
 const updateNextLabel = (labelChar: string, labelNum: number, elemType: ElemType) => {

@@ -1,4 +1,4 @@
-import { ElemType } from "./enum/ElemType"
+import { ElemType } from "../enum/ElemType"
 
 export const parseLabel = (label: string): [text: string, num: number] => {
     const labelParts = label.split("_")

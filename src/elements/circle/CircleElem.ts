@@ -1,8 +1,8 @@
-import { ElemType } from "../enum/ElemType";
-import { createSVGTagElem, distance, pointDistance } from "../helper";
+import { ElemType } from "../../enum/ElemType";
+import { createSVGTagElem, distance, pointDistance } from "../../helpers/helper";
 import CircleEquation from "./CircleEquation";
-import CurveElem from "./CurveElem";
-import PointElem from "./PointElem";
+import CurveElem from "../curve/CurveElem";
+import PointElem from "../point/PointElem";
 
 export default class CircleElem extends CurveElem {
     private center: PointElem

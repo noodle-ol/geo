@@ -1,7 +1,7 @@
 import Elems from "../elements/Elems"
 import Elem from "../elements/IElem"
-import PointElem from "../elements/PointElem"
-import PointStyle from "../elements/PointStyle"
+import PointElem from "../elements/point/PointElem"
+import PointStyle from "../elements/point/PointStyle"
 import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
 

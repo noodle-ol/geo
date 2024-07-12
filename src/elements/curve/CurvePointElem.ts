@@ -1,6 +1,6 @@
 import CurveElem from "./CurveElem";
-import PointElem from "./PointElem";
-import PointElemParam from "./PointElemParam";
+import PointElem from "../point/PointElem";
+import PointElemParam from "../point/PointElemParam";
 
 export default class CurvePointElem extends PointElem {
     private curveElem: CurveElem

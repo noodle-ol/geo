@@ -1,5 +1,5 @@
-import { createCircleDistanceEquation, createCircleEquation } from "../equationHelper"
-import CurveEquation from "./CurveEquation"
+import { createCircleDistanceEquation, createCircleEquation } from "../../helpers/equationHelper"
+import CurveEquation from "../curve/CurveEquation"
 
 // (y - k)^2 + (x - h)^2 = r
 export default class CircleEquation extends CurveEquation {

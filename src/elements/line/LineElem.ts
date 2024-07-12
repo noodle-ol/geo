@@ -1,7 +1,7 @@
-import PointElem from "./PointElem"
-import {createSVGTagElem} from "../helper"
-import { ElemType } from "../enum/ElemType"
-import CurveElem from "./CurveElem"
+import PointElem from "../point/PointElem"
+import {createSVGTagElem} from "../../helpers/helper"
+import { ElemType } from "../../enum/ElemType"
+import CurveElem from "../curve/CurveElem"
 import LineEquation from "./LineEquation"
 
 export default class LineElem extends CurveElem {

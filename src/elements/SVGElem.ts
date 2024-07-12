@@ -1,4 +1,4 @@
-import {createSVGTagElem} from "../helper"
+import {createSVGTagElem} from "../helpers/helper"
 import Elem from "./IElem"
 
 export default class SVGElem {

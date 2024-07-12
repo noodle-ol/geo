@@ -1,5 +1,5 @@
 import Elem from "../elements/IElem"
-import PointElem from "../elements/PointElem"
+import PointElem from "../elements/point/PointElem"
 import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
 

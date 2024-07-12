@@ -1,7 +1,7 @@
 import Elems from "../elements/Elems"
 import Elem from "../elements/IElem"
-import LabelElem from "../elements/LabelElem"
-import LabelStyle from "../elements/LabelStyle"
+import LabelElem from "../elements/label/LabelElem"
+import LabelStyle from "../elements/label/LabelStyle"
 import BaseCommand from "./BaseCommand"
 import Commands from "./Commands"
 
