@@ -77,9 +77,7 @@ export default class PointElem extends LabelElem {
         if (!this.isShow) {
             this.elem.setAttribute("stroke-opacity", "1")
             this.elem.setAttribute("fill-opacity", "1")
-            this.isShow = true
-            const [labelChar, labelNum] = createLabel(this.elemType)
-            this.setLabel(mergeLabelCharLabelNum(labelChar, labelNum))
+            this.isShow = true 
             this.showLabel()
         }
     }
@@ -172,6 +170,8 @@ export default class PointElem extends LabelElem {
         if (this.isGhost) {
             this.hide()
         } else {
+            const [labelChar, labelNum] = createLabel(this.elemType)
+            this.setLabel(mergeLabelCharLabelNum(labelChar, labelNum))
             this.show()
         }
     }
