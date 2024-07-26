@@ -7,6 +7,7 @@ import Commands from "../commands/Commands"
 import FullscreenCommand from "../commands/FullscreenCommand"
 import HideCommand from "../commands/HideCommand"
 import HideLabelCommand from "../commands/HideLabelCommand"
+import UnshowTrackCommand from "../commands/HideTrackCommand"
 import LineCommand from "../commands/LineCommand"
 import LockCommand from "../commands/LockCommand"
 import MouseCommand from "../commands/MouseCommand"
@@ -14,6 +15,7 @@ import PointCommand from "../commands/PointCommand"
 import RemoveCommand from "../commands/RemoveCommand"
 import ShowCommand from "../commands/ShowCommand"
 import ShowLabelCommand from "../commands/ShowLabelCommand"
+import ShowTrackCommand from "../commands/ShowTrackCommand"
 import UnlockCommand from "../commands/UnlockCommand"
 import Elems from "../elements/Elems"
 
@@ -35,6 +37,8 @@ export const commandStartup = () => {
     ChangeLabelStyleCommand.getInstance()
     LockCommand.getInstance()
     UnlockCommand.getInstance()
+    ShowTrackCommand.getInstance()
+    UnshowTrackCommand.getInstance()
 
     Commands.instance.setCurrentCommand(MouseCommand.instance)
 }

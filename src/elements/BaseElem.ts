@@ -6,11 +6,13 @@ export default class BaseElem implements ChoosableElem {
     protected elem: SVGElement
     protected id: number
     protected deprecated: boolean
+    protected isShowTrack: boolean
 
     public constructor(elem: SVGElement) {
         this.elem = elem
         this.id = createId()
         this.deprecated = false
+        this.isShowTrack = false
 
         Elems.instance.set(this.id, this)
         Elems.instance.appendChild(this.elem)
@@ -39,4 +41,12 @@ export default class BaseElem implements ChoosableElem {
     public onmousedown(_e: MouseEvent) {}
 
     public onmousemove(_e: MouseEvent) {}
+    
+    public showTrack() {
+        this.isShowTrack = true
+    }
+
+    public unshowTrack() {
+        this.isShowTrack = false
+    }
 }

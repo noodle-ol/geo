@@ -2,6 +2,7 @@ import { ElemType } from "../../enum/ElemType"
 import {createSVGTagElem} from "../../helpers/helper"
 import { mergeLabelCharLabelNum } from "../../helpers/labelHelper"
 import { createLabel } from "../../helpers/stateHelper"
+import Elems from "../Elems"
 import LabelElem from "../label/LabelElem"
 import PointElemParam from "./PointElemParam"
 import PointElems from "./PointElems"
@@ -199,6 +200,17 @@ export default class PointElem extends LabelElem {
         this.elem.setAttribute("cy", this.y.toString())
         this.setLabelParentX(this.x)
         this.setLabelParentY(this.y)
+
+        if (this.isShowTrack) {
+            const pointElem = createSVGTagElem("circle")
+            pointElem.setAttribute("cx", x.toString())
+            pointElem.setAttribute("cy", y.toString())
+            pointElem.setAttribute("r", this.r.toString())
+            pointElem.setAttribute("stroke", this.stroke)
+            pointElem.setAttribute("fill", this.fill)
+            pointElem.classList.add("track")
+            Elems.instance.appendChild(pointElem)
+        }
 
         for (const callback of this.onMoveCallbacks) {
             callback(this)
