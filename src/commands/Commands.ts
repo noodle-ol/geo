@@ -48,6 +48,6 @@ export default class Commands {
     }
 
     public search(text: string): string[] {
-        return this.commandNames.filter((command: string): boolean => command.includes(text))
+        return this.commandNames.filter((command: string): boolean => command.toUpperCase().includes(text.toUpperCase()))
     }
 }
