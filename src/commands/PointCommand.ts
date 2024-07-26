@@ -9,6 +9,8 @@ import PointElem from "../elements/point/PointElem";
 import PointElems from "../elements/point/PointElems";
 import BaseCommand from "./BaseCommand";
 import Commands from "./Commands";
+import LineElem from "../elements/line/LineElem";
+import LinePointElem from "../elements/line/LinePointElem";
 
 export default class PointCommand extends BaseCommand {
     static instance: PointCommand
@@ -61,7 +63,11 @@ export default class PointCommand extends BaseCommand {
 
         let curveElem = CurveElems.instance.find(clientX, clientY)
         if (curveElem != null) {
-            pointElem = new CurvePointElem(clientX, clientY, null, curveElem, {})
+            if (curveElem instanceof LineElem) {
+                pointElem = new LinePointElem(clientX, clientY, null, curveElem, {})
+            } else {
+                pointElem = new CurvePointElem(clientX, clientY, null, curveElem, {})
+            }
             Actions.instance.push(new CreatePointElemAction(pointElem))
             Elems.instance.select(pointElem)
             return

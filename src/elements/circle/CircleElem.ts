@@ -23,10 +23,8 @@ export default class CircleElem extends CurveElem {
         this.center = center
         this.p = p
 
-        this.center.onMove((p: PointElem) => {
-            elem.setAttribute("cx", p.getX().toString())
-            elem.setAttribute("cy", p.getY().toString())
-            elem.setAttribute("r", pointDistance(p, this.p).toString())
+        this.center.onMove((_p: PointElem) => {
+            this.move()
 
             this.updateEquation()
         })
@@ -35,8 +33,8 @@ export default class CircleElem extends CurveElem {
             this.remove()
         })
 
-        this.p.onMove((p: PointElem) => {
-            this.elem.setAttribute("r", pointDistance(this.center, p).toString())
+        this.p.onMove((_p: PointElem) => {
+            this.move()
         })
 
         this.p.onLeaveCallback(() => {
@@ -44,6 +42,16 @@ export default class CircleElem extends CurveElem {
         })
 
         this.elem = elem
+    }
+
+    public move() {
+        this.elem.setAttribute("cx", this.center.getX().toString())
+        this.elem.setAttribute("cy", this.center.getY().toString())
+        this.elem.setAttribute("r", pointDistance(this.center, this.p).toString())
+
+        for (const callback of this.onMoveCallbacks) {
+            callback(this)
+        }
     }
 
     public updateEquation() {
@@ -60,9 +68,9 @@ export default class CircleElem extends CurveElem {
 
     public setP(p: PointElem) {
         this.p = p
-        this.elem.setAttribute("r", pointDistance(this.center, p).toString())
-        this.p.onMove((p: PointElem) => {
-            this.elem.setAttribute("r", pointDistance(this.center, p).toString())
+        this.move()
+        this.p.onMove((_p: PointElem) => {
+            this.move()
         })
 
         this.updateEquation()

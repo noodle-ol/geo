@@ -27,10 +27,7 @@ export default class LineElem extends CurveElem {
         this.endPoint = endPoint
 
         this.startPoint.onMove((_p) => {
-            this.d = this.generateD()
-            this.elem.setAttribute("d", this.d)
-
-            this.updateEquation()
+            this.move()
         })
 
         this.startPoint.onLeaveCallback(() => {
@@ -38,8 +35,7 @@ export default class LineElem extends CurveElem {
         })
 
         this.endPoint.onMove((_p) => {
-            this.d = this.generateD()
-            this.elem.setAttribute("d", this.d)
+            this.move()
         })
 
         this.endPoint.onLeaveCallback(() => {
@@ -51,13 +47,19 @@ export default class LineElem extends CurveElem {
         this.equation.update(this.startPoint.getX(), this.startPoint.getY(), this.endPoint.getX(), this.endPoint.getY())
     }
 
-    private generateD(): string {
+    public move() {
         const startPointX = this.startPoint.getX()
         const startPointY = this.startPoint.getY()
         const endPointX = this.endPoint.getX()
         const endPointY = this.endPoint.getY()
 
-        return `M ${startPointX} ${startPointY} L ${endPointX} ${endPointY}`
+        this.d = `M ${startPointX} ${startPointY} L ${endPointX} ${endPointY}`
+        this.elem.setAttribute("d", this.d)
+        this.updateEquation()
+
+        for (const callback of this.onMoveCallbacks) {
+            callback(this)
+        }
     }
 
     public getElem(): SVGElement {
@@ -70,11 +72,9 @@ export default class LineElem extends CurveElem {
 
     public setEndPoint(endPoint: PointElem) {
         this.endPoint = endPoint
-        this.d = this.generateD()
-        this.elem.setAttribute("d", this.d)
+        this.move()
         this.endPoint.onMove((_p) => {
-            this.d = this.generateD()
-            this.elem.setAttribute("d", this.d)
+            this.move()
         })
 
         this.updateEquation()
@@ -100,5 +100,17 @@ export default class LineElem extends CurveElem {
         const resultY = m * resultX + b
 
         return [resultX, resultY]
+    }
+
+    public getRatio(x: number, _y: number): number {
+        if (this.endPoint.getX() == this.startPoint.getX()) {
+            return 0
+        }
+
+        return (x - this.startPoint.getX()) / (this.endPoint.getX() - this.startPoint.getX())
+    }
+
+    public getPointByRatio(ratio: number): [number, number] {
+        return [(this.endPoint.getX() - this.startPoint.getX()) * ratio + this.startPoint.getX(), (this.endPoint.getY() - this.startPoint.getY()) * ratio + this.startPoint.getY()]
     }
 }

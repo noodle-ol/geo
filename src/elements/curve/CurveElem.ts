@@ -9,6 +9,7 @@ export default class CurveElem extends LabelElem {
     protected strokeWidth: number
     protected equation: CurveEquation
     protected isShow: boolean
+    protected onMoveCallbacks: ((p: CurveElem) => void)[]
 
     public constructor(elem: SVGElement, equation: CurveEquation, stroke: string, parentX: number, parentY: number, label: Nullable<string>, isLabelShow: boolean, elemType: ElemType) {
         super(elem, parentX, parentY, label, isLabelShow, elemType)
@@ -21,6 +22,7 @@ export default class CurveElem extends LabelElem {
         this.elem.setAttribute("stroke-width", this.strokeWidth.toString())
         this.elem.setAttribute("fill", "transparent")
         this.elem.classList.add("cursor-pointer")
+        this.onMoveCallbacks = []
 
         CurveElems.instance.push(this)
     }
@@ -73,4 +75,8 @@ export default class CurveElem extends LabelElem {
     }
 
     public updateEquation(){}
+
+    public onMove(callback: (p: CurveElem) => void) {
+        this.onMoveCallbacks.push(callback)
+    }
 }

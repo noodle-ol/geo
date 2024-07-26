@@ -3,7 +3,7 @@ import PointElem from "../point/PointElem";
 import PointElemParam from "../point/PointElemParam";
 
 export default class CurvePointElem extends PointElem {
-    private curveElem: CurveElem
+    protected curveElem: CurveElem
 
     public constructor(x: number, y: number, label: Nullable<string>, curveElem: CurveElem, params: PointElemParam) {
         super(x, y, label, params)

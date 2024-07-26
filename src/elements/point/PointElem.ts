@@ -209,7 +209,6 @@ export default class PointElem extends LabelElem {
         this.onMoveCallbacks.push(callback)
     }
 
-
     public onmousedown(_e: MouseEvent) {
         
     }
