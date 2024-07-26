@@ -1,3 +1,4 @@
+import Commands from "../../commands/Commands"
 import { execute } from "../../helpers/commandHelper"
 import SearchCommandElem from "./SearchCommandElem"
 
@@ -20,8 +21,18 @@ export default class CommandElem {
             this.elem.onkeydown = (e) => {
                 e.stopPropagation()
                 if (e.key == "Enter") {
-                    execute(this.getValue())
-                    this.hide()
+                    if (Commands.instance.search(this.getValue()).length > 0) {
+                        const result = SearchCommandElem.instance.tab()
+
+                        if (result != null) {
+                            if (this.elem != null) {
+                                this.elem.value = result
+                            }
+                        }
+                    } else {
+                        execute(this.getValue())
+                        this.hide()
+                    }
                 } else if (e.key == "Escape") {
                     this.hide()
                 } else if (e.key == "Tab") {

@@ -25,6 +25,10 @@ export default class SearchCommandElem {
         return SearchCommandElem.instance
     }
 
+    public getResultElems(): HTMLElement[] {
+        return this.resultElems
+    }
+
     public show() {
         if (!this.isshow) {
             this.isshow = true
@@ -53,12 +57,6 @@ export default class SearchCommandElem {
     }
 
     public search() {
-        if (this.text == "") {
-            this.hide()
-
-            return 
-        }
-
         const results = Commands.instance.search(this.text)
         if (results.length == 0) {
             this.hide()
