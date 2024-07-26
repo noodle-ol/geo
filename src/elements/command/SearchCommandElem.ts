@@ -60,6 +60,11 @@ export default class SearchCommandElem {
         }
 
         const results = Commands.instance.search(this.text)
+        if (results.length == 0) {
+            this.hide()
+
+            return 
+        }
         const length = results.length < 5 ? results.length : 5
         if (this.elem != null) {
             this.elem.replaceChildren()
