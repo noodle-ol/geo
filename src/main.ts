@@ -1,13 +1,14 @@
 import './css/main.css'
 import SVGElem from './elements/SVGElem'
 import PointElems from './elements/point/PointElems'
-import { commandStartup, execute } from './helpers/commandHelper'
+import { commandStartup } from './helpers/commandHelper'
 import Elems from './elements/Elems'
 import Commands from './commands/Commands'
 import { shortcut } from './helpers/shortcutHelper'
 import CurveElems from './elements/curve/CurveElems'
 import Actions from './actions/Actions'
 import { getCoorByMouseEvent } from './helpers/coorHelper'
+import CommandElem from './elements/command/CommandElem'
 
 window.onload = (_e) => {
     globalThis.nextId = 1
@@ -43,6 +44,11 @@ window.onload = (_e) => {
 
     commandStartup()
 
+    const searchCommandElem: Nullable<HTMLElement> = document.getElementById("search-command-box")
+    if (searchCommandElem == null) {
+        return
+    }
+
     mainElem.onmousedown = (e) => {
         globalThis.currentShortcut = ""
         Commands.instance.getCurrentCommand().onmousedown(e)
@@ -68,10 +74,12 @@ window.onload = (_e) => {
         }
     }
 
+    CommandElem.getInstance()
+
     document.onkeyup = (e) => {
         if (e.key == "/") {
-            commandElem?.classList.remove("hide")
-            commandElem?.focus()
+            CommandElem.instance.show()
+            CommandElem.instance.focus()
 
             Commands.instance.getCurrentCommand().onleave()
             Elems.instance.unselect()
@@ -88,26 +96,6 @@ window.onload = (_e) => {
                     Elems.instance.unselect()
                     Commands.instance.setCurrentCommand(commandOb)
                 }
-            }
-        }
-    }
-
-    const commandElem: Nullable<HTMLInputElement> = <Nullable<HTMLInputElement>>document.getElementById("command")
-    if (commandElem != null) {
-        commandElem.onblur = (_e) => {
-            commandElem.classList.add("hide")
-            commandElem.value = ""
-        }
-
-        commandElem.onkeyup = (e) => {
-            e.stopPropagation()
-            if (e.key == "Enter") {
-                execute(commandElem.value)
-                commandElem.classList.add("hide")
-                commandElem.value = ""
-            } else if (e.key == "Escape") {
-                commandElem.classList.add("hide")
-                commandElem.value = ""
             }
         }
     }

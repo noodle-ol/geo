@@ -5,10 +5,12 @@ export default class Commands {
     static instance: Commands
     private map: Map<string, Command>
     private currentCommand: Command
+    private commandNames: string[]
 
     private constructor() {
         this.map = new Map<string, Command>()
         this.currentCommand = MouseCommand.instance
+        this.commandNames = []
     }
 
     public static getInstance(): Commands {
@@ -21,6 +23,7 @@ export default class Commands {
 
     public set(name: string, command: Command) {
         this.map.set(name, command)
+        this.commandNames.push(name)
     }
 
     public get(name: string): Nullable<Command> {
@@ -42,5 +45,9 @@ export default class Commands {
 
     public setCurrentCommand(command: Command) {
         this.currentCommand = command
+    }
+
+    public search(text: string): string[] {
+        return this.commandNames.filter((command: string): boolean => command.includes(text))
     }
 }

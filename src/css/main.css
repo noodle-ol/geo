@@ -28,12 +28,43 @@ body::-webkit-scrollbar {
     box-sizing: border-box;
     position: absolute;
     width: 100%;
-    border: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
     bottom: 0;
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     outline: none;
+    height: 25px;
+}
+
+#search-command-box {
+    box-sizing: border-box;
+    position: absolute;
+    width: 200px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    bottom: 25px;
+    outline: none;
+}
+
+.search-result {
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    height: 25px;
+    line-height: 25px;
+    user-select: none
+}
+
+.search-result:not(.search-result-choose):hover {
+    background-color: rgba(50, 50, 50, 0.2);
+}
+
+.search-result-choose {
+    background-color: gray;
 }
 
 .hide {

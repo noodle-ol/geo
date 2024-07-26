@@ -7,3 +7,8 @@ export const createSVGTagElem = (elem: string) => document.createElementNS(SVGNS
 export const distance = (x1: number, y1: number, x2: number, y2: number) => Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
 
 export const pointDistance = (p1: PointElem, p2: PointElem) => distance(p1.getX(), p1.getY(), p2.getX(), p2.getY())
+
+export const isLetter = (letter: string) => {
+    const charCode = letter.charCodeAt(0)
+    return (charCode > 96 && charCode < 123) || (charCode > 64 && charCode < 91)
+}
